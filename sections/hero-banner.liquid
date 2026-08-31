@@ -76,8 +76,12 @@
       {%- endif -%}
     </div>
 
-    <div style="position:relative" data-reveal="zoom" data-delay="0.2">
-      <div class="hero__card glass sheen">
+    {%- comment -%}
+      «float» = el producto levita sin marco (necesita PNG con fondo recortado).
+      «card»  = la tarjeta de vidrio, que tolera fotos con fondo blanco.
+    {%- endcomment -%}
+    <div class="hero__media" data-reveal="zoom" data-delay="0.2">
+      <div class="{% if section.settings.image_style == 'card' %}hero__card glass sheen{% else %}hero__float{% endif %}">
         {%- if img != blank -%}
           <img src="{{ img | image_url: width: 1000 }}"
                srcset="{{ img | image_url: width: 600 }} 600w, {{ img | image_url: width: 1000 }} 1000w"
@@ -109,7 +113,15 @@
   "settings": [
     { "type": "header", "content": "Imágenes" },
     { "type": "image_picker", "id": "bg_image", "label": "Imagen de fondo (pantalla completa)" },
-    { "type": "image_picker", "id": "card_image", "label": "Imagen del producto (tarjeta flotante)", "info": "Si la dejas vacía se usa la foto principal del producto." },
+    { "type": "image_picker", "id": "card_image", "label": "Imagen del producto", "info": "Si la dejas vacía se usa la foto principal del producto." },
+    {
+      "type": "select", "id": "image_style", "label": "Estilo de la imagen", "default": "float",
+      "info": "«Levitando» necesita una imagen PNG con el fondo recortado. Si tu foto tiene fondo blanco, usa «Tarjeta de vidrio».",
+      "options": [
+        { "value": "float", "label": "Levitando, sin marco" },
+        { "value": "card", "label": "Tarjeta de vidrio" }
+      ]
+    },
     { "type": "header", "content": "Textos" },
     { "type": "text", "id": "eyebrow", "label": "Etiqueta superior", "default": "Corrector de postura MAERK" },
     { "type": "text", "id": "title", "label": "Título", "default": "Endereza tu espalda" },

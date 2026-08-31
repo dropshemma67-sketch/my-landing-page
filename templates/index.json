@@ -47,7 +47,8 @@
         "cta2_url": "#como-funciona",
         "badge_a": "Envío gratis",
         "badge_b": "Pagas al recibir",
-        "show_scroll": true
+        "show_scroll": true,
+        "image_style": "float"
       }
     },
     "trust": {

@@ -554,3 +554,107 @@ ul { margin: 0; padding: 0; list-style: none; }
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .skip-link { position: absolute; top: -60px; left: 12px; z-index: 100; background: var(--warm); color: #1A1206; padding: .7rem 1.1rem; border-radius: 10px; transition: top .3s var(--ease); }
 .skip-link:focus { top: 12px; }
+
+/* ============================================================
+   Producto levitando en el banner (sin marco)
+   Requiere una imagen PNG con el fondo recortado.
+   ============================================================ */
+.hero__media { position: relative; }
+
+.hero__float {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding-block: clamp(1rem, 3vw, 2.5rem);
+}
+
+/* Halo cálido que envuelve al producto y hace de "fondo" */
+.hero__float::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 50%; left: 50%;
+  translate: -50% -50%;
+  width: 86%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(232, 176, 75, .30) 0%,
+    rgba(185, 118, 47, .15) 42%,
+    transparent 68%);
+  filter: blur(52px);
+  animation: haloPulse 7s ease-in-out infinite;
+}
+
+/* Núcleo de luz más cerrado: separa del fondo un producto negro */
+.hero__float > * { grid-area: 1 / 1; }
+.hero__float::before {
+  background: radial-gradient(circle,
+    rgba(246, 210, 138, .30) 0%,
+    rgba(232, 176, 75, .26) 26%,
+    rgba(185, 118, 47, .14) 50%,
+    transparent 70%);
+}
+
+/* Sombra proyectada en el suelo: es lo que vende la levitación */
+.hero__float::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  bottom: 4%; left: 50%;
+  translate: -50% 0;
+  width: 46%;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, .68), transparent 72%);
+  filter: blur(15px);
+  animation: groundShadow 7s ease-in-out infinite;
+}
+
+.hero__float img,
+.hero__float .placeholder-svg {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  /* drop-shadow sigue el contorno real del PNG, no la caja */
+  filter:
+    /* rim light: contornea la silueta para que un producto negro
+       no se funda con el fondo negro */
+    drop-shadow(0 0 1px rgba(246, 210, 138, .55))
+    drop-shadow(0 0 3px rgba(232, 176, 75, .35))
+    drop-shadow(0 30px 38px rgba(0, 0, 0, .70))
+    drop-shadow(0 0 46px rgba(232, 176, 75, .26));
+  animation: levitate 7s ease-in-out infinite;
+}
+
+@keyframes levitate {
+  0%, 100% { transform: translateY(0)      rotate(-0.7deg); }
+  50%      { transform: translateY(-24px)  rotate(0.7deg); }
+}
+@keyframes groundShadow {
+  0%, 100% { transform: scaleX(1);   opacity: .55; }
+  50%      { transform: scaleX(.78); opacity: .28; }
+}
+@keyframes haloPulse {
+  0%, 100% { transform: scale(1);    opacity: .85; }
+  50%      { transform: scale(1.09); opacity: 1; }
+}
+
+@media (max-width: 900px) {
+  /* En móvil el producto va arriba del texto: es lo primero que debe verse,
+     y así el precio y el botón siguen entrando en la primera pantalla. */
+  .hero__media { order: -1; }
+  .hero__grid { gap: 1.8rem; }
+  .hero__float { max-width: 290px; margin-inline: auto; padding-block: .5rem; }
+  .hero__float::after { height: 16px; }
+}
+@media (max-width: 560px) {
+  .hero__float { max-width: 240px; }
+}
+
+/* Debe ir después de las animaciones para poder desactivarlas */
+@media (prefers-reduced-motion: reduce) {
+  .hero__float img,
+  .hero__float::before,
+  .hero__float::after { animation: none !important; }
+}

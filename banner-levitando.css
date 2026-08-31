@@ -1,0 +1,105 @@
+
+/* ============================================================
+   Producto levitando en el banner, sin marco
+   Pegar al final de assets/base.css
+   ============================================================ */
+.hero__card,
+.hero__float {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  animation: none;
+  display: grid;
+  place-items: center;
+}
+.hero__card > *,
+.hero__float > * { grid-area: 1 / 1; }
+
+/* Halo cálido: hace de fondo y separa el producto del negro */
+.hero__card::before,
+.hero__float::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 50%; left: 50%;
+  translate: -50% -50%;
+  width: 88%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(246, 210, 138, .30) 0%,
+    rgba(232, 176, 75, .26) 26%,
+    rgba(185, 118, 47, .14) 50%,
+    transparent 70%);
+  filter: blur(52px);
+  animation: haloPulse 7s ease-in-out infinite;
+}
+
+/* Sombra en el suelo: es lo que hace creíble la levitación */
+.hero__card::after,
+.hero__float::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: auto auto 4% 50%;
+  translate: -50% 0;
+  width: 46%;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, .68), transparent 72%);
+  filter: blur(15px);
+  transform: none;
+  animation: groundShadow 7s ease-in-out infinite;
+}
+
+.hero__card img,
+.hero__float img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border-radius: 0;
+  /* rim light: contornea la silueta para que un producto negro
+     no se funda con el fondo negro */
+  filter:
+    drop-shadow(0 0 1px rgba(246, 210, 138, .55))
+    drop-shadow(0 0 3px rgba(232, 176, 75, .35))
+    drop-shadow(0 30px 38px rgba(0, 0, 0, .70))
+    drop-shadow(0 0 46px rgba(232, 176, 75, .26));
+  animation: levitate 7s ease-in-out infinite;
+}
+
+@keyframes levitate {
+  0%, 100% { transform: translateY(0)     rotate(-0.7deg); }
+  50%      { transform: translateY(-24px) rotate(0.7deg); }
+}
+@keyframes groundShadow {
+  0%, 100% { transform: scaleX(1);   opacity: .55; }
+  50%      { transform: scaleX(.78); opacity: .28; }
+}
+@keyframes haloPulse {
+  0%, 100% { transform: scale(1);    opacity: .85; }
+  50%      { transform: scale(1.09); opacity: 1; }
+}
+
+@media (max-width: 900px) {
+  /* El producto va arriba del texto: es lo primero que se ve y el
+     precio con el botón siguen entrando en la primera pantalla. */
+  .hero__grid > *:last-child { order: -1; }
+  .hero__grid { gap: 1.8rem; }
+  .hero__card, .hero__float { max-width: 290px; margin-inline: auto; }
+  .hero__card::after, .hero__float::after { height: 16px; }
+}
+@media (max-width: 560px) {
+  .hero__card, .hero__float { max-width: 240px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__card img, .hero__float img,
+  .hero__card::before, .hero__float::before,
+  .hero__card::after, .hero__float::after { animation: none !important; }
+}
