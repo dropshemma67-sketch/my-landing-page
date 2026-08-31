@@ -29,12 +29,40 @@ El formulario de contraentrega crea un **pedido real** en Shopify, así que nece
 1. **Productos → Agregar producto**
    - Título: `Corrector de Postura MAERK`
    - Precio: `60.00`
-   - Desmarca **"Hacer seguimiento de la cantidad"** (dropshipping, sin stock propio)
    - Marca **"Este es un producto físico"** y pon un peso (ej. `0.2 kg`)
    - Sube las 4 fotos del producto
-2. **Tienda online → Personalizar → sección «Producto + contraentrega»**
+
+2. **Crea las dos tallas como variantes** (en la misma pantalla, sección *Variantes*):
+   - **Agregar opciones como talla** → Nombre de la opción: `Talla`
+   - Valores: `S` y `M` — escritos **exactamente así**, en mayúscula
+   - En cada variante: precio `60.00` y desmarca **"Hacer seguimiento de la cantidad"**
+     (dropshipping, sin stock propio)
+
+   > El tema empareja la talla que elige el cliente con la variante buscando la letra
+   > en el nombre. Si escribes `Talla S` o `Small` en vez de `S`, no va a emparejar y el
+   > pedido saldrá con la primera variante. Mantén `S` y `M` a secas.
+
+3. **Tienda online → Personalizar → sección «Producto + contraentrega»**
    → en **Producto de Shopify**, selecciónalo.
-3. Haz lo mismo en la sección **Banner principal** (campo *Producto*) para que el precio se tome solo.
+
+4. Haz lo mismo en la sección **Banner principal** (campo *Producto*) para que el precio se tome solo.
+
+> La talla elegida se guarda **siempre** como dato del pedido, tengas o no las variantes
+> creadas. Las variantes solo hacen que el pedido salga con la talla correcta también a
+> nivel de inventario.
+
+### Ficha del producto (para la descripción en Shopify)
+
+| Dato | Valor |
+|---|---|
+| Tipo | Corrector de postura en X, doble ajuste, unisex |
+| Material | Almohadilla de cuero PU acolchado; correas con perforaciones de ventilación |
+| Ajuste | Hebillas y correas regulables en hombros y torso |
+| Talla S | 46 – 68 cm de contorno |
+| Talla M | 68 – 91 cm de contorno |
+| Cómo elegir | La misma talla que usa en polos, camisas o blusas |
+| Uso | Casa, oficina, gimnasio, yoga, exteriores. Bajo la ropa o encima |
+| Cuidado | Lavado a mano, agua fría, jabón neutro, secado a la sombra |
 
 ---
 
@@ -154,3 +182,9 @@ locales/es.default.json      Textos base en español
 
 > El producto es un artículo de bienestar, no un dispositivo médico. Evita prometer que
 > cura hernias, escoliosis o dolores diagnosticados.
+>
+> La descripción del proveedor menciona que la mala postura causa **miopía**. Eso no tiene
+> respaldo y está deliberadamente fuera de los textos del tema: es el tipo de afirmación
+> médica que hace que Meta rechace la cuenta publicitaria. Tampoco uses "corrige la
+> columna" ni "elimina el dolor"; el encuadre seguro es *alivia la tensión* y
+> *ayuda a entrenar el hábito postural*.

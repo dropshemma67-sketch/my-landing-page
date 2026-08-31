@@ -84,17 +84,59 @@
 
           <input type="hidden" data-variant-input value="{{ variant.id }}">
           <input type="hidden" data-quantity-input value="1">
+          {%- comment -%}
+            La talla siempre se guarda como propiedad del pedido, tengas o no
+            variantes creadas en Shopify. Si las creaste, además selecciona la
+            variante correcta para que el stock y el pedido salgan bien.
+          {%- endcomment -%}
+          <input type="hidden" data-prop="Talla" data-size-input value="">
+
+          {%- assign size_blocks = section.blocks | where: 'type', 'size' -%}
+          {%- if size_blocks.size > 0 -%}
+            <div>
+              <p class="tiny" style="color:var(--warm-2);margin-bottom:.55rem">Elige tu talla</p>
+              <div class="packs" data-packs>
+                {%- for block in size_blocks -%}
+                  {%- comment -%} Busca en el producto una variante que coincida con esta talla {%- endcomment -%}
+                  {%- assign matched = blank -%}
+                  {%- for v in prod.variants -%}
+                    {%- if v.title contains block.settings.code -%}
+                      {%- assign matched = v -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  <label class="pack{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
+                    <input type="radio" name="cod-size"
+                           data-size="{{ block.settings.code }}"
+                           {% if matched != blank %}data-variant="{{ matched.id }}"{% endif %}
+                           {% if forloop.first %}checked{% endif %}>
+                    <span class="pack__t">Talla {{ block.settings.code }}</span>
+                    <span class="pack__p" style="font-weight:500;color:var(--muted);font-size:.85rem">{{ block.settings.range }}</span>
+                  </label>
+                {%- endfor -%}
+              </div>
+              {%- if section.settings.size_help != blank -%}
+                <p class="cod__note" style="margin-top:.6rem">
+                  {% render 'icon', name: 'info', size: 15 %}
+                  <span>{{ section.settings.size_help }}</span>
+                </p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
 
           {%- assign qty_blocks = section.blocks | where: 'type', 'quantity' -%}
           {%- if qty_blocks.size > 0 -%}
-            <div class="packs" data-packs>
-              {%- for block in qty_blocks -%}
-                <label class="pack {% if forloop.first %}is-active{% endif %}" {{ block.shopify_attributes }}>
-                  <input type="radio" name="cod-qty" data-qty="{{ block.settings.qty }}" {% if forloop.first %}checked{% endif %}>
-                  <span class="pack__t">{{ block.settings.label }}</span>
-                  <span class="pack__p">{{ block.settings.price }}</span>
-                </label>
-              {%- endfor -%}
+            <div>
+              <p class="tiny" style="color:var(--warm-2);margin-bottom:.55rem">Cantidad</p>
+              <div class="packs" data-packs>
+                {%- for block in qty_blocks -%}
+                  <label class="pack{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
+                    <input type="radio" name="cod-qty" data-qty="{{ block.settings.qty }}" {% if forloop.first %}checked{% endif %}>
+                    <span class="pack__t">{{ block.settings.label }}</span>
+                    <span class="pack__p">{{ block.settings.price }}</span>
+                  </label>
+                {%- endfor -%}
+              </div>
             </div>
           {%- endif -%}
 
@@ -191,7 +233,7 @@
     { "type": "header", "content": "Producto" },
     { "type": "product", "id": "product", "label": "Producto de Shopify", "info": "Obligatorio para que el pedido llegue a tu panel. El precio y el stock se toman de aquí." },
     { "type": "text", "id": "title", "label": "Título", "default": "Corrector de Postura MAERK" },
-    { "type": "text", "id": "tagline", "label": "Bajada", "default": "Soporte en X ajustable · Talla única · Unisex" },
+    { "type": "text", "id": "tagline", "label": "Bajada", "default": "Soporte en X · Doble ajuste · Tallas S y M · Unisex" },
     { "type": "text", "id": "price_text", "label": "Precio (si no conectas producto)", "default": "S/ 60" },
     { "type": "text", "id": "price_badge", "label": "Insignia junto al precio", "default": "Envío gratis" },
     { "type": "checkbox", "id": "show_rating", "label": "Mostrar valoración", "default": true },
@@ -203,6 +245,7 @@
     { "type": "image_picker", "id": "image_4", "label": "Imagen 4" },
     { "type": "header", "content": "Formulario" },
     { "type": "text", "id": "form_title", "label": "Título del formulario", "default": "Completa tus datos y recíbelo en casa" },
+    { "type": "textarea", "id": "size_help", "label": "Ayuda de tallas", "default": "Elige la misma talla que usas en polos, camisas o blusas. Si estás entre dos, pide la M." },
     {
       "type": "select", "id": "submit_mode", "label": "Al enviar el pedido", "default": "checkout",
       "info": "«Checkout de Shopify» crea un pedido real con los datos del formulario. «WhatsApp» solo abre un chat con el resumen.",
@@ -228,6 +271,14 @@
       ]
     },
     {
+      "type": "size",
+      "name": "Talla",
+      "settings": [
+        { "type": "text", "id": "code", "label": "Talla", "default": "S", "info": "Debe coincidir con el nombre de la variante en Shopify (ej. «S» o «M»)." },
+        { "type": "text", "id": "range", "label": "Medida", "default": "46 - 68 cm" }
+      ]
+    },
+    {
       "type": "quantity",
       "name": "Opción de cantidad",
       "settings": [
@@ -241,10 +292,12 @@
     {
       "name": "Producto + contraentrega",
       "blocks": [
-        { "type": "feature", "settings": { "text": "Diseño en X que alinea hombros sin forzar la espalda" } },
-        { "type": "feature", "settings": { "text": "Tela transpirable con acolchado en axilas y espalda" } },
-        { "type": "feature", "settings": { "text": "Talla única regulable de 65 a 115 cm de contorno" } },
-        { "type": "feature", "settings": { "text": "Invisible bajo la ropa, para hombres y mujeres" } },
+        { "type": "feature", "settings": { "text": "Diseño en X de doble ajuste que alinea los hombros sin forzar" } },
+        { "type": "feature", "settings": { "text": "Cuero PU acolchado con perforaciones que ventilan la espalda" } },
+        { "type": "feature", "settings": { "text": "Dos tallas: S (46-68 cm) y M (68-91 cm), para hombre y mujer" } },
+        { "type": "feature", "settings": { "text": "Se usa bajo la ropa o encima · oficina, gimnasio y casa" } },
+        { "type": "size", "settings": { "code": "S", "range": "46 - 68 cm" } },
+        { "type": "size", "settings": { "code": "M", "range": "68 - 91 cm" } },
         { "type": "quantity", "settings": { "label": "1 unidad", "qty": "1", "price": "S/ 60" } },
         { "type": "quantity", "settings": { "label": "2 unidades", "qty": "2", "price": "S/ 120" } }
       ]

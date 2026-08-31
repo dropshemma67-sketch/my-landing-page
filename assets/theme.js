@@ -157,25 +157,46 @@
     });
   }
 
-  /* ---------- Selector de pack ---------- */
+  /* ---------- Selectores de talla y cantidad ---------- */
   function initPacks() {
+    /* Aplica al formulario lo que dice una opción marcada. Cada atributo se
+       lee por separado para que elegir talla no pise la cantidad, ni al revés. */
+    function apply(form, input) {
+      if (!form || !input) return;
+      var qty = input.getAttribute('data-qty');
+      if (qty !== null) {
+        var qtyInput = form.querySelector('[data-quantity-input]');
+        if (qtyInput) qtyInput.value = qty;
+      }
+      var variant = input.getAttribute('data-variant');
+      if (variant) {
+        var variantInput = form.querySelector('[data-variant-input]');
+        if (variantInput) variantInput.value = variant;
+      }
+      var size = input.getAttribute('data-size');
+      if (size !== null) {
+        var sizeInput = form.querySelector('[data-size-input]');
+        if (sizeInput) sizeInput.value = size;
+      }
+    }
+
     document.querySelectorAll('[data-packs]').forEach(function (group) {
       var packs = group.querySelectorAll('.pack');
+      var form = group.closest('form');
+
       packs.forEach(function (pack) {
         var input = pack.querySelector('input[type="radio"]');
-        if (input && input.checked) pack.classList.add('is-active');
+        /* Escribe el valor por defecto aunque nadie haya hecho clic todavía. */
+        if (input && input.checked) {
+          pack.classList.add('is-active');
+          apply(form, input);
+        }
         if (!once(pack, 'Pack')) return;
         pack.addEventListener('click', function () {
           if (input) input.checked = true;
           packs.forEach(function (p) { p.classList.remove('is-active'); });
           pack.classList.add('is-active');
-          var form = group.closest('form');
-          if (form && input) {
-            var hid = form.querySelector('[data-quantity-input]');
-            if (hid) hid.value = input.getAttribute('data-qty') || '1';
-            var vid = form.querySelector('[data-variant-input]');
-            if (vid && input.getAttribute('data-variant')) vid.value = input.getAttribute('data-variant');
-          }
+          apply(form, input);
           group.dispatchEvent(new CustomEvent('pack:change', { bubbles: true, detail: { pack: pack } }));
         });
       });
