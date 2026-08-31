@@ -1,0 +1,57 @@
+<section class="section" id="{{ section.settings.anchor | default: 'preguntas' }}">
+  <div class="wrap">
+    <div class="head-block">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" data-reveal><i class="dot"></i>{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="h2" data-reveal data-delay="0.06">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="faq" data-faq>
+      {%- for block in section.blocks -%}
+        <div class="faq__item glass" data-reveal data-delay="{{ forloop.index0 | times: 0.05 }}" {{ block.shopify_attributes }}>
+          <button class="faq__q" type="button" data-faq-q aria-expanded="false">
+            <span>{{ block.settings.q }}</span>
+            <span class="faq__ico">{% render 'icon', name: 'plus', size: 14 %}</span>
+          </button>
+          <div class="faq__a"><div><p>{{ block.settings.a }}</p></div></div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Preguntas frecuentes",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancla (id)", "default": "preguntas" },
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Dudas resueltas" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Preguntas frecuentes" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Pregunta",
+      "settings": [
+        { "type": "text", "id": "q", "label": "Pregunta", "default": "¿Cuándo pago?" },
+        { "type": "textarea", "id": "a", "label": "Respuesta", "default": "Pagas en efectivo cuando el repartidor te entrega el producto." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Preguntas frecuentes",
+      "blocks": [
+        { "type": "faq", "settings": { "q": "¿Cómo funciona el pago contraentrega?", "a": "No pagas nada al hacer el pedido. Te llamamos o escribimos por WhatsApp para confirmar tu dirección, enviamos el producto y pagas en efectivo al repartidor cuando lo recibes." } },
+        { "type": "faq", "settings": { "q": "¿Cuánto demora el envío?", "a": "En Lima Metropolitana entre 24 y 48 horas hábiles. A provincias entre 2 y 5 días hábiles según el destino. El envío es gratis en todo el Perú." } },
+        { "type": "faq", "settings": { "q": "¿Qué talla debo pedir?", "a": "Es talla única regulable. Las correas se ajustan con velcro y sirven para contornos de pecho de 65 a 115 cm aproximadamente, tanto para hombres como para mujeres." } },
+        { "type": "faq", "settings": { "q": "¿Cuántas horas al día debo usarlo?", "a": "Empieza con 20 a 30 minutos diarios la primera semana y ve subiendo poco a poco hasta un máximo de 2 horas al día. No se recomienda dormir con él puesto." } },
+        { "type": "faq", "settings": { "q": "¿Se nota debajo de la ropa?", "a": "Las tiras son delgadas y planas, así que bajo un polo, camisa o blusa pasa desapercibido. Con ropa muy ajustada puede notarse ligeramente la línea de la espalda." } },
+        { "type": "faq", "settings": { "q": "¿Puedo cambiarlo si no me acomoda?", "a": "Sí. Tienes 7 días desde la entrega para solicitar el cambio, siempre que el producto esté en buen estado y con su empaque. Escríbenos por WhatsApp y lo coordinamos." } },
+        { "type": "faq", "settings": { "q": "¿Cómo lo lavo?", "a": "A mano con agua fría y jabón neutro. Cierra los velcros antes de lavarlo y déjalo secar a la sombra. No usar secadora ni lejía." } },
+        { "type": "faq", "settings": { "q": "¿Sirve si tengo dolor de espalda diagnosticado?", "a": "El corrector es un apoyo para mejorar el hábito postural, no un tratamiento médico. Si tienes una lesión, hernia o dolor persistente, consulta antes con tu médico o fisioterapeuta." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

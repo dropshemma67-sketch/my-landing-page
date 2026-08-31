@@ -1,0 +1,21 @@
+{% layout none %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ shop.name }} — Tarjeta de regalo</title>
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  <style>:root{--bg:#08070A;--bg-2:#100D0E;--text:#F3ECE2;--muted:#A79A8B;--warm:#E8B04B;--warm-2:#F6D28A;--bronze:#B9762F;--font-head:system-ui,sans-serif;--font-body:system-ui,sans-serif}</style>
+</head>
+<body>
+  <main class="section"><div class="wrap center stack" style="max-width:520px">
+    <h1 class="h2">Tarjeta de regalo</h1>
+    <div class="glass" style="padding:2rem;margin-top:1.5rem">
+      <p class="price-row__now">{{ gift_card.initial_value | money }}</p>
+      {{ gift_card.qr_identifier }}
+      <p class="tiny" style="margin-top:1rem;letter-spacing:.24em">{{ gift_card.code | format_code }}</p>
+    </div>
+    <a class="btn btn--warm" href="{{ shop.url }}"><span class="btn__label">Ir a la tienda</span></a>
+  </div></main>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_bg | default: '#08070A' }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64 }}">
+  {%- endif -%}
+
+  <title>{{ page_title }}{% if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+  {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+
+  {{ content_for_header }}
+
+  {%- liquid
+    assign head_font = settings.type_header_font
+    assign body_font = settings.type_body_font
+    assign body_bold = body_font | font_modify: 'weight', 'bold'
+  -%}
+  {{ head_font | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+  {{ body_bold | font_face: font_display: 'swap' }}
+
+  <style>
+    :root {
+      --bg:      {{ settings.color_bg }};
+      --bg-2:    {{ settings.color_bg_2 }};
+      --text:    {{ settings.color_text }};
+      --muted:   {{ settings.color_muted }};
+      --warm:    {{ settings.color_warm }};
+      --warm-2:  {{ settings.color_warm_light }};
+      --bronze:  {{ settings.color_bronze }};
+      --font-head: {{ head_font.family }}, {{ head_font.fallback_families }};
+      --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+      --radius: {{ settings.corner_radius }}px;
+      --wrap: {{ settings.page_width }}px;
+    }
+  </style>
+
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+</head>
+
+<body class="template-{{ template.name }}">
+  <a class="skip-link" href="#main">Ir al contenido</a>
+
+  {% section 'announcement-bar' %}
+  {% section 'header' %}
+
+  <main id="main">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+  {%- if settings.whatsapp_number != blank -%}
+    <a class="wa-float"
+       href="https://wa.me/{{ settings.whatsapp_number | remove: '+' | remove: ' ' | remove: '-' }}?text={{ settings.whatsapp_message | default: 'Hola, quiero información del corrector de postura' | url_encode }}"
+       target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+      {% render 'icon', name: 'whatsapp', size: 26 %}
+    </a>
+  {%- endif -%}
+</body>
+</html>

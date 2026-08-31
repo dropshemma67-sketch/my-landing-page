@@ -1,0 +1,63 @@
+<section class="section" id="{{ section.settings.anchor | default: 'como-funciona' }}">
+  <div class="wrap">
+    <div class="head-block">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" data-reveal><i class="dot"></i>{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="h2" data-reveal data-delay="0.06">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="lead" data-reveal data-delay="0.12">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+
+    <div class="steps">
+      {%- for block in section.blocks -%}
+        <article class="glass glass-hover sheen step" data-reveal data-delay="{{ forloop.index0 | times: 0.1 }}" {{ block.shopify_attributes }}>
+          <span class="step__n">{{ forloop.index }}</span>
+          <h3 class="h3">{{ block.settings.title }}</h3>
+          <p class="muted small">{{ block.settings.text }}</p>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_text != blank -%}
+      <div class="center" style="margin-top:2.6rem" data-reveal>
+        <a class="btn btn--warm btn--lg" href="{{ section.settings.cta_url | default: '#comprar' }}">
+          <span class="btn__label">{{ section.settings.cta_text }}</span>
+          {% render 'icon', name: 'arrow-right', size: 18 %}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cómo se usa",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancla (id)", "default": "como-funciona" },
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Tres pasos" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Póntelo, ajústalo, olvídate" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "No necesitas ayuda ni instrucciones largas. En menos de un minuto ya lo estás usando." },
+    { "type": "text", "id": "cta_text", "label": "Botón", "default": "Quiero el mío" },
+    { "type": "url", "id": "cta_url", "label": "Enlace del botón" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Paso",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Póntelo" },
+        { "type": "textarea", "id": "text", "label": "Texto", "default": "Pasa los brazos por las tiras como si fuera una mochila." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cómo se usa",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Póntelo como mochila", "text": "Pasa los brazos por las dos tiras acolchadas. La X queda centrada en la parte alta de tu espalda." } },
+        { "type": "step", "settings": { "title": "Ajusta el velcro", "text": "Cierra la banda inferior a la altura del pecho y regula las correas hasta sentir un soporte firme pero cómodo." } },
+        { "type": "step", "settings": { "title": "Súbelo de a pocos", "text": "Empieza con 20 a 30 minutos al día y aumenta cada semana hasta 2 horas. Tu espalda hace el resto." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

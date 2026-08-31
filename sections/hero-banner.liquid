@@ -1,0 +1,155 @@
+{%- liquid
+  assign prod = section.settings.product
+  assign img = section.settings.card_image
+  if img == blank and prod != blank
+    assign img = prod.featured_image
+  endif
+-%}
+
+<section class="hero grain" id="inicio">
+  {%- if section.settings.bg_image != blank -%}
+    <div class="hero__bg" data-parallax="0.12">
+      <img src="{{ section.settings.bg_image | image_url: width: 2400 }}"
+           srcset="{{ section.settings.bg_image | image_url: width: 900 }} 900w,
+                   {{ section.settings.bg_image | image_url: width: 1600 }} 1600w,
+                   {{ section.settings.bg_image | image_url: width: 2400 }} 2400w"
+           sizes="100vw" alt="" width="2400" height="1400" fetchpriority="high">
+    </div>
+  {%- endif -%}
+  <div class="hero__veil"></div>
+
+  <div class="aura">
+    <span class="aura__blob aura__blob--1"></span>
+    <span class="aura__blob aura__blob--2"></span>
+    <span class="aura__blob aura__blob--3"></span>
+  </div>
+
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow" data-reveal data-delay="0"><i class="dot"></i>{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+
+      <h1 class="display" data-reveal data-delay="0.08">
+        {{ section.settings.title }}
+        {%- if section.settings.title_accent != blank -%}
+          <br><span class="grad-warm">{{ section.settings.title_accent }}</span>
+        {%- endif -%}
+      </h1>
+
+      <p class="lead" data-reveal data-delay="0.16">{{ section.settings.subtitle }}</p>
+
+      <div class="price-tag" data-reveal data-delay="0.22">
+        {%- if prod != blank -%}
+          <span class="price-tag__cur">{{ cart.currency.symbol }}</span>
+          <span class="price-tag__num">{{ prod.price | divided_by: 100.0 | round: 0 }}</span>
+        {%- else -%}
+          <span class="price-tag__cur">{{ section.settings.price_currency }}</span>
+          <span class="price-tag__num">{{ section.settings.price_amount }}</span>
+        {%- endif -%}
+        <span class="price-tag__note">{{ section.settings.price_note }}</span>
+      </div>
+
+      <div class="hero__cta" data-reveal data-delay="0.28">
+        <a class="btn btn--warm btn--lg" href="{{ section.settings.cta_url | default: '#comprar' }}">
+          <span class="btn__label">{{ section.settings.cta_text }}</span>
+          {% render 'icon', name: 'arrow-right', size: 18 %}
+        </a>
+        {%- if section.settings.cta2_text != blank -%}
+          <a class="btn btn--glass btn--lg" href="{{ section.settings.cta2_url | default: '#beneficios' }}">
+            <span class="btn__label">{{ section.settings.cta2_text }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="hero__stats" data-reveal data-delay="0.34">
+          {%- for block in section.blocks -%}
+            <div {{ block.shopify_attributes }}>
+              <div class="stat__num">
+                <span data-count="{{ block.settings.number }}" data-suffix="{{ block.settings.suffix }}">0</span>
+              </div>
+              <div class="stat__lbl">{{ block.settings.label }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div style="position:relative" data-reveal="zoom" data-delay="0.2">
+      <div class="hero__card glass sheen">
+        {%- if img != blank -%}
+          <img src="{{ img | image_url: width: 1000 }}"
+               srcset="{{ img | image_url: width: 600 }} 600w, {{ img | image_url: width: 1000 }} 1000w"
+               sizes="(max-width: 900px) 90vw, 46vw"
+               alt="{{ section.settings.title | escape }}" width="1000" height="1000" fetchpriority="high">
+        {%- else -%}
+          {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.badge_a != blank -%}
+        <span class="hero__badge hero__badge--a">{% render 'icon', name: 'truck', size: 16 %}{{ section.settings.badge_a }}</span>
+      {%- endif -%}
+      {%- if section.settings.badge_b != blank -%}
+        <span class="hero__badge hero__badge--b">{% render 'icon', name: 'wallet', size: 16 %}{{ section.settings.badge_b }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.settings.show_scroll -%}
+    <div class="scroll-hint"><span class="scroll-hint__line"></span><span>Desliza</span></div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Banner principal",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Imágenes" },
+    { "type": "image_picker", "id": "bg_image", "label": "Imagen de fondo (pantalla completa)" },
+    { "type": "image_picker", "id": "card_image", "label": "Imagen del producto (tarjeta flotante)", "info": "Si la dejas vacía se usa la foto principal del producto." },
+    { "type": "header", "content": "Textos" },
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta superior", "default": "Corrector de postura MAERK" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Endereza tu espalda" },
+    { "type": "text", "id": "title_accent", "label": "Título destacado (dorado)", "default": "sin pensarlo." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Soporte discreto en X que alinea hombros y columna mientras trabajas, entrenas o manejas. Se ajusta en segundos y no se nota debajo de la ropa." },
+    { "type": "header", "content": "Precio" },
+    { "type": "product", "id": "product", "label": "Producto", "info": "Al conectarlo, el precio se toma automáticamente de Shopify." },
+    { "type": "text", "id": "price_currency", "label": "Símbolo de moneda", "default": "S/" },
+    { "type": "text", "id": "price_amount", "label": "Precio", "default": "60" },
+    { "type": "text", "id": "price_note", "label": "Nota junto al precio", "default": "· pagas al recibir" },
+    { "type": "header", "content": "Botones" },
+    { "type": "text", "id": "cta_text", "label": "Botón principal", "default": "Pedir contraentrega" },
+    { "type": "url", "id": "cta_url", "label": "Enlace principal" },
+    { "type": "text", "id": "cta2_text", "label": "Botón secundario", "default": "Ver cómo funciona" },
+    { "type": "url", "id": "cta2_url", "label": "Enlace secundario" },
+    { "type": "header", "content": "Insignias flotantes" },
+    { "type": "text", "id": "badge_a", "label": "Insignia 1", "default": "Envío gratis" },
+    { "type": "text", "id": "badge_b", "label": "Insignia 2", "default": "Pagas al recibir" },
+    { "type": "checkbox", "id": "show_scroll", "label": "Mostrar indicador de scroll", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Dato",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Número", "default": "4.8" },
+        { "type": "text", "id": "suffix", "label": "Sufijo", "default": "/5" },
+        { "type": "text", "id": "label", "label": "Etiqueta", "default": "Valoración" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner principal",
+      "blocks": [
+        { "type": "stat", "settings": { "number": "4.8", "suffix": "/5", "label": "Valoración" } },
+        { "type": "stat", "settings": { "number": "2400", "suffix": "+", "label": "Pedidos entregados" } },
+        { "type": "stat", "settings": { "number": "24", "suffix": "h", "label": "Despacho" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

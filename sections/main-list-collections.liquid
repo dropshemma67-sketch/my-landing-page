@@ -1,0 +1,17 @@
+<section class="section">
+  <div class="wrap">
+    <h1 class="h2 center" style="margin-bottom:2.4rem" data-reveal>Colecciones</h1>
+    <div class="grid-3">
+      {%- for collection in collections -%}
+        <a class="glass glass-hover sheen pcard" href="{{ collection.url }}" data-reveal data-delay="{{ forloop.index0 | times: 0.06 }}">
+          {%- if collection.featured_image -%}<img src="{{ collection.featured_image | image_url: width: 700 }}" alt="{{ collection.title | escape }}" width="700" height="700" loading="lazy">{%- endif -%}
+          <span class="pcard__t">{{ collection.title }}</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Lista de colecciones", "tag": "section", "settings": [] }
+{% endschema %}

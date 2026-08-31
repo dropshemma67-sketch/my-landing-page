@@ -1,0 +1,12 @@
+<section class="section"><div class="wrap" style="max-width:720px">
+  <h1 class="h2 center" style="margin-bottom:1.8rem">Mis direcciones</h1>
+  <div class="glass" style="padding:1.8rem">
+    {%- for address in customer.addresses -%}
+      <div class="rte small">{{ address | format_address }}</div>
+      <hr class="hairline" style="margin:1rem 0">
+    {%- else -%}
+      <p class="muted">Aún no has guardado direcciones.</p>
+    {%- endfor -%}
+    <p class="small"><a href="{{ routes.account_url }}">Volver a mi cuenta</a></p>
+  </div>
+</div></section>

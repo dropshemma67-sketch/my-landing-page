@@ -1,0 +1,51 @@
+<header class="hdr" data-header>
+  <div class="wrap hdr__inner">
+    <a class="logo" href="{{ routes.root_url }}">
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | image_url: width: 400 }}" alt="{{ shop.name | escape }}"
+             width="{{ settings.logo.width }}" height="{{ settings.logo.height }}"
+             style="max-width:{{ settings.logo_width }}px;height:auto">
+      {%- else -%}
+        <span class="grad-warm">{{ section.settings.brand | default: shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    <nav class="nav" aria-label="Principal">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="hdr__actions">
+      {%- if section.settings.cta_text != blank -%}
+        <a class="btn btn--warm" href="{{ section.settings.cta_url | default: '#comprar' }}" style="padding:.68rem 1.35rem;font-size:.9rem">
+          <span class="btn__label">{{ section.settings.cta_text }}</span>
+        </a>
+      {%- endif -%}
+      <a class="hdr__cart" href="{{ routes.cart_url }}" aria-label="Carrito">
+        {% render 'icon', name: 'bag', size: 17 %}
+        <span>{{ cart.item_count }}</span>
+      </a>
+      <button class="burger" data-burger aria-expanded="false" aria-label="Abrir menú"><span></span></button>
+    </div>
+  </div>
+
+  <div class="mobile-nav" data-mobile-nav>
+    {%- for link in section.settings.menu.links -%}
+      <a href="{{ link.url }}">{{ link.title }}</a>
+    {%- endfor -%}
+    <a href="{{ section.settings.cta_url | default: '#comprar' }}" style="color:var(--warm-2);font-weight:600">{{ section.settings.cta_text | default: 'Pedir ahora' }}</a>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Encabezado",
+  "settings": [
+    { "type": "text", "id": "brand", "label": "Nombre de marca", "default": "MAERK" },
+    { "type": "link_list", "id": "menu", "label": "Menú", "default": "main-menu" },
+    { "type": "text", "id": "cta_text", "label": "Texto del botón", "default": "Pedir ahora" },
+    { "type": "url", "id": "cta_url", "label": "Enlace del botón" }
+  ]
+}
+{% endschema %}

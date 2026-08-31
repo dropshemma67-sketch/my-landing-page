@@ -1,0 +1,51 @@
+<section class="section" style="padding-block:clamp(2rem,4vw,3.2rem)">
+  <div class="wrap">
+    <div class="trust" data-reveal>
+      {%- for block in section.blocks -%}
+        <div class="trust__item" {{ block.shopify_attributes }}>
+          <span class="trust__ico">{% render 'icon', name: block.settings.icon, size: 26 %}</span>
+          <span class="trust__t">{{ block.settings.title }}</span>
+          <span class="small muted">{{ block.settings.text }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Barra de confianza",
+  "tag": "section",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Garantía",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Pago contraentrega" },
+        { "type": "text", "id": "text", "label": "Texto", "default": "Pagas cuando lo tienes en la mano" },
+        {
+          "type": "select", "id": "icon", "label": "Ícono", "default": "wallet",
+          "options": [
+            { "value": "wallet", "label": "Billetera" }, { "value": "truck", "label": "Camión" },
+            { "value": "shield", "label": "Escudo" }, { "value": "refresh", "label": "Cambio" },
+            { "value": "clock", "label": "Reloj" }, { "value": "lock", "label": "Candado" },
+            { "value": "heart", "label": "Corazón" }, { "value": "check-circle", "label": "Check" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Barra de confianza",
+      "blocks": [
+        { "type": "item", "settings": { "icon": "wallet", "title": "Pago contraentrega", "text": "Pagas cuando lo recibes" } },
+        { "type": "item", "settings": { "icon": "truck", "title": "Envío gratis", "text": "A todo el Perú" } },
+        { "type": "item", "settings": { "icon": "refresh", "title": "Cambio por talla", "text": "Dentro de 7 días" } },
+        { "type": "item", "settings": { "icon": "shield", "title": "Compra segura", "text": "Atención real por WhatsApp" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,12 @@
+<section class="section"><div class="wrap" style="max-width:460px">
+  <h1 class="h2 center" style="margin-bottom:1.6rem">Activar cuenta</h1>
+  <div class="glass" style="padding:1.8rem">
+    {% form 'activate_customer_password', class: 'cod' %}
+      {{ form.errors | default_errors }}
+      <div class="field"><label for="ac-1">Contraseña</label><input id="ac-1" type="password" name="customer[password]" required></div>
+      <div class="field"><label for="ac-2">Confirmar</label><input id="ac-2" type="password" name="customer[password_confirmation]" required></div>
+      <button class="btn btn--warm btn--wide" type="submit"><span class="btn__label">Activar</span></button>
+      <button class="btn btn--glass btn--wide" type="submit" name="decline"><span class="btn__label">Rechazar invitación</span></button>
+    {% endform %}
+  </div>
+</div></section>

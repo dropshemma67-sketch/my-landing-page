@@ -1,0 +1,254 @@
+{%- liquid
+  assign prod = section.settings.product
+  assign variant = prod.selected_or_first_available_variant
+
+  comment
+    La galería usa las 4 imágenes de la sección. Si no cargaste ninguna,
+    cae automáticamente en las fotos del producto conectado.
+  endcomment
+  assign main_img = section.settings.image_1
+  if main_img == blank
+    assign main_img = prod.featured_image
+  endif
+-%}
+
+<section class="section" id="{{ section.settings.anchor | default: 'comprar' }}">
+  <div class="aura" style="opacity:.42"><span class="aura__blob aura__blob--1"></span></div>
+  <div class="wrap" style="position:relative;z-index:2">
+    <div class="buy" data-sticky-anchor>
+
+      {%- comment -%} ---------- Galería ---------- {%- endcomment -%}
+      <div class="gallery" data-gallery data-reveal="left">
+        <div class="gallery__main glass">
+          {%- if main_img != blank -%}
+            <img data-gallery-main src="{{ main_img | image_url: width: 1200 }}" alt="{{ prod.title | default: section.settings.title | escape }}" width="1200" height="1200" loading="lazy">
+          {%- else -%}
+            {{ 'product-apparel-2' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+
+        <div class="gallery__thumbs">
+          {%- if section.settings.image_1 != blank -%}
+            {% render 'gallery-thumb', image: section.settings.image_1, index: 1, active: true %}
+            {% render 'gallery-thumb', image: section.settings.image_2, index: 2 %}
+            {% render 'gallery-thumb', image: section.settings.image_3, index: 3 %}
+            {% render 'gallery-thumb', image: section.settings.image_4, index: 4 %}
+          {%- elsif prod != blank -%}
+            {%- for image in prod.images limit: 8 -%}
+              {% render 'gallery-thumb', image: image, index: forloop.index, active: forloop.first %}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- comment -%} ---------- Panel de compra ---------- {%- endcomment -%}
+      <div class="buy__panel glass" data-reveal="right">
+        {%- if section.settings.show_rating -%}
+          <div class="rating">
+            {% for i in (1..5) %}{% render 'icon', name: 'star', size: 15 %}{% endfor %}
+            <span class="muted">{{ section.settings.rating_text }}</span>
+          </div>
+        {%- endif -%}
+
+        <h2 class="h2" style="font-size:clamp(1.6rem,3vw,2.3rem)">{{ section.settings.title }}</h2>
+        <p class="muted small" style="margin-top:-.5rem">{{ section.settings.tagline }}</p>
+
+        <div class="price-row">
+          {%- if prod != blank -%}
+            <span class="price-row__now">{{ prod.price | money_without_trailing_zeros }}</span>
+          {%- else -%}
+            <span class="price-row__now">{{ section.settings.price_text }}</span>
+          {%- endif -%}
+          {%- if section.settings.price_badge != blank -%}
+            <span class="ship-free">{{ section.settings.price_badge }}</span>
+          {%- endif -%}
+        </div>
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="checklist">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'feature' -%}
+                <li {{ block.shopify_attributes }}>{% render 'icon', name: 'check', size: 17 %}<span>{{ block.settings.text }}</span></li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <hr class="hairline">
+
+        {%- comment -%} ---------- Formulario contraentrega ---------- {%- endcomment -%}
+        <form class="cod" data-cod-form
+              data-cod-mode="{{ section.settings.submit_mode }}"
+              data-wa-number="{{ settings.whatsapp_number }}"
+              novalidate>
+
+          <input type="hidden" data-variant-input value="{{ variant.id }}">
+          <input type="hidden" data-quantity-input value="1">
+
+          {%- assign qty_blocks = section.blocks | where: 'type', 'quantity' -%}
+          {%- if qty_blocks.size > 0 -%}
+            <div class="packs" data-packs>
+              {%- for block in qty_blocks -%}
+                <label class="pack {% if forloop.first %}is-active{% endif %}" {{ block.shopify_attributes }}>
+                  <input type="radio" name="cod-qty" data-qty="{{ block.settings.qty }}" {% if forloop.first %}checked{% endif %}>
+                  <span class="pack__t">{{ block.settings.label }}</span>
+                  <span class="pack__p">{{ block.settings.price }}</span>
+                </label>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          <p class="tiny" style="color:var(--warm-2);margin-top:.3rem">{{ section.settings.form_title }}</p>
+
+          <div class="field">
+            <label for="cod-name">Nombre y apellido</label>
+            <input id="cod-name" type="text" autocomplete="name" placeholder="Ej. María Quispe"
+                   data-required data-type="text" data-prop="Nombre">
+            <span class="field__err"></span>
+          </div>
+
+          <div class="two-col">
+            <div class="field">
+              <label for="cod-phone">Celular / WhatsApp</label>
+              <input id="cod-phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="987 654 321"
+                     data-required data-type="phone" data-prop="Celular">
+              <span class="field__err"></span>
+            </div>
+            <div class="field">
+              <label for="cod-region">Departamento</label>
+              <select id="cod-region" data-required data-prop="Departamento">
+                <option value="">Selecciona…</option>
+                {%- assign regions = section.settings.regions | split: ',' -%}
+                {%- for r in regions -%}
+                  <option value="{{ r | strip }}">{{ r | strip }}</option>
+                {%- endfor -%}
+              </select>
+              <span class="field__err"></span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="cod-district">Distrito o ciudad</label>
+            <input id="cod-district" type="text" placeholder="Ej. Miraflores"
+                   data-required data-type="text" data-prop="Distrito">
+            <span class="field__err"></span>
+          </div>
+
+          <div class="field">
+            <label for="cod-address">Dirección exacta</label>
+            <input id="cod-address" type="text" autocomplete="street-address" placeholder="Av. Larco 123, dpto. 502"
+                   data-required data-type="text" data-prop="Dirección">
+            <span class="field__err"></span>
+          </div>
+
+          <div class="field">
+            <label for="cod-ref">Referencia (opcional)</label>
+            <textarea id="cod-ref" placeholder="Frente al parque, portón negro. Horario en que te encuentran."
+                      data-prop="Referencia"></textarea>
+          </div>
+
+          <div class="cod__status" data-cod-status role="status" aria-live="polite"></div>
+
+          <button class="btn btn--warm btn--wide btn--lg" type="submit" data-cod-submit>
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="btn__label">{{ section.settings.submit_text }}</span>
+          </button>
+
+          <p class="cod__note">
+            {% render 'icon', name: 'shield', size: 16 %}
+            <span>{{ section.settings.reassurance }}</span>
+          </p>
+
+          <div class="payline">
+            {% render 'icon', name: 'lock', size: 13 %}
+            <span>{{ section.settings.payline }}</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ---------- CTA fija en móvil ---------- {%- endcomment -%}
+{%- if section.settings.show_sticky -%}
+  <div class="sticky-cta" data-sticky-cta>
+    <div class="sticky-cta__price">
+      <span class="tiny muted" style="letter-spacing:.06em">Contraentrega</span>
+      <b>{% if prod != blank %}{{ prod.price | money_without_trailing_zeros }}{% else %}{{ section.settings.price_text }}{% endif %}</b>
+    </div>
+    <a class="btn btn--warm" href="#{{ section.settings.anchor | default: 'comprar' }}">
+      <span class="btn__label">{{ section.settings.sticky_text }}</span>
+    </a>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Producto + contraentrega",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancla (id)", "default": "comprar" },
+    { "type": "header", "content": "Producto" },
+    { "type": "product", "id": "product", "label": "Producto de Shopify", "info": "Obligatorio para que el pedido llegue a tu panel. El precio y el stock se toman de aquí." },
+    { "type": "text", "id": "title", "label": "Título", "default": "Corrector de Postura MAERK" },
+    { "type": "text", "id": "tagline", "label": "Bajada", "default": "Soporte en X ajustable · Talla única · Unisex" },
+    { "type": "text", "id": "price_text", "label": "Precio (si no conectas producto)", "default": "S/ 60" },
+    { "type": "text", "id": "price_badge", "label": "Insignia junto al precio", "default": "Envío gratis" },
+    { "type": "checkbox", "id": "show_rating", "label": "Mostrar valoración", "default": true },
+    { "type": "text", "id": "rating_text", "label": "Texto de valoración", "default": "4.8 · 312 reseñas" },
+    { "type": "header", "content": "Galería" },
+    { "type": "image_picker", "id": "image_1", "label": "Imagen 1" },
+    { "type": "image_picker", "id": "image_2", "label": "Imagen 2" },
+    { "type": "image_picker", "id": "image_3", "label": "Imagen 3" },
+    { "type": "image_picker", "id": "image_4", "label": "Imagen 4" },
+    { "type": "header", "content": "Formulario" },
+    { "type": "text", "id": "form_title", "label": "Título del formulario", "default": "Completa tus datos y recíbelo en casa" },
+    {
+      "type": "select", "id": "submit_mode", "label": "Al enviar el pedido", "default": "checkout",
+      "info": "«Checkout de Shopify» crea un pedido real con los datos del formulario. «WhatsApp» solo abre un chat con el resumen.",
+      "options": [
+        { "value": "checkout", "label": "Ir al checkout de Shopify (recomendado)" },
+        { "value": "whatsapp", "label": "Enviar por WhatsApp" }
+      ]
+    },
+    { "type": "text", "id": "submit_text", "label": "Texto del botón", "default": "Confirmar pedido contraentrega" },
+    { "type": "textarea", "id": "reassurance", "label": "Texto de confianza", "default": "No pagas nada ahora. Te llamamos para confirmar la entrega y pagas en efectivo cuando recibas tu pedido." },
+    { "type": "text", "id": "payline", "label": "Línea inferior", "default": "Tus datos viajan cifrados y solo se usan para la entrega" },
+    { "type": "textarea", "id": "regions", "label": "Departamentos (separados por coma)", "default": "Lima, Callao, Arequipa, La Libertad, Piura, Lambayeque, Cusco, Junín, Áncash, Ica, Cajamarca, Puno, Tacna, Loreto, San Martín, Ucayali, Huánuco, Ayacucho, Apurímac, Amazonas, Huancavelica, Madre de Dios, Moquegua, Pasco, Tumbes" },
+    { "type": "header", "content": "Barra fija en móvil" },
+    { "type": "checkbox", "id": "show_sticky", "label": "Mostrar barra fija", "default": true },
+    { "type": "text", "id": "sticky_text", "label": "Texto del botón fijo", "default": "Pedir ahora" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Punto de venta",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "Se ajusta al torso en segundos" }
+      ]
+    },
+    {
+      "type": "quantity",
+      "name": "Opción de cantidad",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Etiqueta", "default": "1 unidad" },
+        { "type": "text", "id": "qty", "label": "Cantidad", "default": "1" },
+        { "type": "text", "id": "price", "label": "Precio mostrado", "default": "S/ 60" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Producto + contraentrega",
+      "blocks": [
+        { "type": "feature", "settings": { "text": "Diseño en X que alinea hombros sin forzar la espalda" } },
+        { "type": "feature", "settings": { "text": "Tela transpirable con acolchado en axilas y espalda" } },
+        { "type": "feature", "settings": { "text": "Talla única regulable de 65 a 115 cm de contorno" } },
+        { "type": "feature", "settings": { "text": "Invisible bajo la ropa, para hombres y mujeres" } },
+        { "type": "quantity", "settings": { "label": "1 unidad", "qty": "1", "price": "S/ 60" } },
+        { "type": "quantity", "settings": { "label": "2 unidades", "qty": "2", "price": "S/ 120" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

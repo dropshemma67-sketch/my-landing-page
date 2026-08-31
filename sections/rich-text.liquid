@@ -1,0 +1,22 @@
+<section class="section">
+  <div class="wrap" style="max-width:820px">
+    <div class="head-block" data-reveal>
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow"><i class="dot"></i>{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.title != blank -%}<h2 class="h2">{{ section.settings.title }}</h2>{%- endif -%}
+    </div>
+    <div class="rte glass" style="padding:clamp(1.5rem,3vw,2.4rem)" data-reveal>{{ section.settings.text }}</div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Texto enriquecido",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Sobre MAERK" },
+    { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>Somos una tienda peruana enfocada en productos de bienestar y postura. Seleccionamos pocos productos y los probamos antes de venderlos.</p>" }
+  ],
+  "presets": [{ "name": "Texto enriquecido" }]
+}
+{% endschema %}

@@ -1,0 +1,15 @@
+<section class="section"><div class="wrap" style="max-width:460px">
+  <h1 class="h2 center" style="margin-bottom:1.6rem">Crear cuenta</h1>
+  <div class="glass" style="padding:1.8rem">
+    {% form 'create_customer', class: 'cod' %}
+      {{ form.errors | default_errors }}
+      <div class="two-col">
+        <div class="field"><label for="cr-first">Nombre</label><input id="cr-first" type="text" name="customer[first_name]"></div>
+        <div class="field"><label for="cr-last">Apellido</label><input id="cr-last" type="text" name="customer[last_name]"></div>
+      </div>
+      <div class="field"><label for="cr-email">Correo</label><input id="cr-email" type="email" name="customer[email]" required></div>
+      <div class="field"><label for="cr-pass">Contraseña</label><input id="cr-pass" type="password" name="customer[password]" required></div>
+      <button class="btn btn--warm btn--wide" type="submit"><span class="btn__label">Crear cuenta</span></button>
+    {% endform %}
+  </div>
+</div></section>

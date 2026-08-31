@@ -1,0 +1,12 @@
+<section class="section"><div class="wrap" style="max-width:460px">
+  <h1 class="h2 center" style="margin-bottom:1.6rem">Iniciar sesión</h1>
+  <div class="glass" style="padding:1.8rem">
+    {% form 'customer_login', class: 'cod' %}
+      {{ form.errors | default_errors }}
+      <div class="field"><label for="ci-email">Correo</label><input id="ci-email" type="email" name="customer[email]" required></div>
+      <div class="field"><label for="ci-pass">Contraseña</label><input id="ci-pass" type="password" name="customer[password]"></div>
+      <button class="btn btn--warm btn--wide" type="submit"><span class="btn__label">Entrar</span></button>
+      <p class="small center muted"><a href="{{ routes.account_register_url }}">Crear una cuenta</a></p>
+    {% endform %}
+  </div>
+</div></section>

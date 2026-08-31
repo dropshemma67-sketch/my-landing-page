@@ -1,0 +1,53 @@
+{
+  "current": {
+    "color_bg": "#08070A",
+    "color_bg_2": "#100D0E",
+    "color_text": "#F3ECE2",
+    "color_muted": "#A79A8B",
+    "color_warm": "#E8B04B",
+    "color_warm_light": "#F6D28A",
+    "color_bronze": "#B9762F",
+    "type_header_font": "poppins_n6",
+    "type_body_font": "assistant_n4",
+    "page_width": 1200,
+    "corner_radius": 22,
+    "logo_width": 130,
+    "whatsapp_number": "51987654321",
+    "whatsapp_message": "Hola MAERK, quiero información del corrector de postura",
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "blocks": {
+          "a1": { "type": "item", "settings": { "icon": "truck", "text": "Envío gratis a todo el Perú" } },
+          "a2": { "type": "item", "settings": { "icon": "wallet", "text": "Pagas al recibir tu pedido" } },
+          "a3": { "type": "item", "settings": { "icon": "shield", "text": "Cambio por talla dentro de 7 días" } },
+          "a4": { "type": "item", "settings": { "icon": "clock", "text": "Despacho en 24 h en Lima" } }
+        },
+        "block_order": ["a1", "a2", "a3", "a4"],
+        "settings": {}
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "brand": "MAERK",
+          "cta_text": "Pedir ahora",
+          "cta_url": "#comprar"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "f1": { "type": "links", "settings": { "title": "Tienda" } },
+          "f2": { "type": "links", "settings": { "title": "Ayuda" } }
+        },
+        "block_order": ["f1", "f2"],
+        "settings": {
+          "brand": "MAERK",
+          "about": "Productos de bienestar y postura seleccionados uno por uno. Envíos a todo el Perú con pago contraentrega.",
+          "hours": "Lunes a sábado de 9:00 a 19:00. Respondemos por WhatsApp en menos de 1 hora.",
+          "legal": "Este producto no reemplaza el diagnóstico de un profesional de la salud."
+        }
+      }
+    }
+  }
+}

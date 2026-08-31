@@ -1,0 +1,14 @@
+<section class="section">
+  <div class="wrap" style="max-width:780px">
+    <div class="head-block" data-reveal>
+      <span class="eyebrow"><i class="dot"></i>{{ article.published_at | date: '%d de %B, %Y' }}</span>
+      <h1 class="h2">{{ article.title }}</h1>
+    </div>
+    {%- if article.image -%}<img class="glass" style="margin-bottom:2rem;border-radius:var(--radius)" src="{{ article.image | image_url: width: 1400 }}" alt="{{ article.title | escape }}" width="1400" height="800">{%- endif -%}
+    <div class="rte" data-reveal>{{ article.content }}</div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Artículo", "tag": "section", "settings": [] }
+{% endschema %}

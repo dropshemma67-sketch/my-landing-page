@@ -1,0 +1,44 @@
+<section class="section" id="{{ section.settings.anchor | default: 'cta' }}">
+  <div class="wrap">
+    <div class="glass cta-final grain" data-reveal="zoom">
+      <div class="aura"><span class="aura__blob aura__blob--1" style="opacity:.42"></span><span class="aura__blob aura__blob--2" style="opacity:.42"></span></div>
+      <div style="position:relative;z-index:2;display:grid;gap:1.3rem;justify-items:center">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow"><i class="dot"></i>{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="h2" style="max-width:18ch">{{ section.settings.title }} <span class="grad-warm">{{ section.settings.title_accent }}</span></h2>
+        <p class="lead" style="margin-inline:auto">{{ section.settings.text }}</p>
+        <div class="hero__cta" style="justify-content:center;margin-top:.5rem">
+          <a class="btn btn--warm btn--lg" href="{{ section.settings.cta_url | default: '#comprar' }}">
+            <span class="btn__label">{{ section.settings.cta_text }}</span>
+            {% render 'icon', name: 'arrow-right', size: 18 %}
+          </a>
+          {%- if settings.whatsapp_number != blank and section.settings.show_wa -%}
+            <a class="btn btn--glass btn--lg" target="_blank" rel="noopener"
+               href="https://wa.me/{{ settings.whatsapp_number | remove: '+' | remove: ' ' | remove: '-' }}?text={{ settings.whatsapp_message | url_encode }}">
+              {% render 'icon', name: 'whatsapp', size: 18 %}<span class="btn__label">Consultar por WhatsApp</span>
+            </a>
+          {%- endif -%}
+        </div>
+        <p class="small muted">{{ section.settings.footnote }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Llamado final",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancla (id)", "default": "cta" },
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Último paso" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Tu espalda te lo va a" },
+    { "type": "text", "id": "title_accent", "label": "Título destacado", "default": "agradecer." },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Haz tu pedido hoy, recíbelo en casa y paga recién cuando lo tengas en la mano. Sin riesgo, sin adelantos." },
+    { "type": "text", "id": "cta_text", "label": "Botón", "default": "Pedir contraentrega" },
+    { "type": "url", "id": "cta_url", "label": "Enlace" },
+    { "type": "checkbox", "id": "show_wa", "label": "Mostrar botón de WhatsApp", "default": true },
+    { "type": "text", "id": "footnote", "label": "Nota final", "default": "Envío gratis a todo el Perú · Cambio por talla dentro de 7 días" }
+  ],
+  "presets": [{ "name": "Llamado final" }]
+}
+{% endschema %}

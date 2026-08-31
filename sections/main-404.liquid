@@ -1,0 +1,13 @@
+<section class="section" style="position:relative;overflow:hidden">
+  <div class="aura"><span class="aura__blob aura__blob--1"></span><span class="aura__blob aura__blob--2"></span></div>
+  <div class="wrap empty-state" style="position:relative;z-index:2">
+    <span class="eyebrow"><i class="dot"></i>Error 404</span>
+    <h1 class="display grad-warm">Página no encontrada</h1>
+    <p class="lead">El enlace que abriste ya no existe o cambió de dirección.</p>
+    <a class="btn btn--warm btn--lg" href="{{ routes.root_url }}"><span class="btn__label">Volver al inicio</span>{% render 'icon', name: 'arrow-right', size: 18 %}</a>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "404", "tag": "section", "settings": [] }
+{% endschema %}

@@ -1,0 +1,25 @@
+{
+  "general": {
+    "meta": { "tags": "Etiquetas: {{ tags }}", "page": "Página {{ page }}" },
+    "search": { "placeholder": "Buscar", "submit": "Buscar" },
+    "pagination": { "previous": "Anterior", "next": "Siguiente" },
+    "accessibility": { "skip_to_content": "Ir al contenido", "close": "Cerrar", "menu": "Menú" }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Agregar al carrito",
+      "sold_out": "Agotado",
+      "quantity": "Cantidad",
+      "regular_price": "Precio"
+    }
+  },
+  "cart": {
+    "general": { "title": "Tu carrito", "empty": "Tu carrito está vacío", "subtotal": "Subtotal", "checkout": "Finalizar pedido", "update": "Actualizar", "remove": "Quitar" }
+  },
+  "customer": {
+    "login": { "title": "Iniciar sesión", "email": "Correo", "password": "Contraseña", "submit": "Entrar" },
+    "register": { "title": "Crear cuenta", "submit": "Crear cuenta" },
+    "account": { "title": "Mi cuenta", "logout": "Cerrar sesión", "orders": "Pedidos" }
+  },
+  "onboarding": { "product_title": "Nombre del producto" }
+}

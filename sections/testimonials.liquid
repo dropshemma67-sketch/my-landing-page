@@ -1,0 +1,60 @@
+<section class="section" id="{{ section.settings.anchor | default: 'resenas' }}">
+  <div class="aura" style="opacity:.4"><span class="aura__blob aura__blob--2"></span></div>
+  <div class="wrap" style="position:relative;z-index:2">
+    <div class="head-block">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" data-reveal><i class="dot"></i>{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="h2" data-reveal data-delay="0.06">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="lead" data-reveal data-delay="0.12">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+
+    <div class="grid-3">
+      {%- for block in section.blocks -%}
+        <figure class="glass glass-hover sheen quote" data-reveal data-delay="{{ forloop.index0 | times: 0.08 }}" {{ block.shopify_attributes }}>
+          <div class="quote__stars">{% for i in (1..5) %}{% render 'icon', name: 'star', size: 14 %}{% endfor %}</div>
+          <blockquote class="quote__txt">“{{ block.settings.text }}”</blockquote>
+          <figcaption class="quote__who">
+            <span class="avatar">{{ block.settings.name | slice: 0 }}</span>
+            <span>
+              <span style="display:block;font-weight:600;font-size:.9rem">{{ block.settings.name }}</span>
+              <span class="verified">{% render 'icon', name: 'check-circle', size: 12 %}{{ block.settings.meta }}</span>
+            </span>
+          </figcaption>
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reseñas",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancla (id)", "default": "resenas" },
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Lo que dicen" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Personas que ya cambiaron su postura" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Reseñas de clientes que recibieron su pedido contraentrega." }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Reseña",
+      "settings": [
+        { "type": "textarea", "id": "text", "label": "Reseña", "default": "Me lo pongo apenas me siento a trabajar y ya no termino el día con el cuello duro." },
+        { "type": "text", "id": "name", "label": "Nombre", "default": "Carla M." },
+        { "type": "text", "id": "meta", "label": "Detalle", "default": "Compra verificada · Lima" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reseñas",
+      "blocks": [
+        { "type": "quote", "settings": { "text": "Trabajo 9 horas en laptop y terminaba con el cuello durísimo. Con esto llevo tres semanas y la diferencia es real: me siento derecha sin pensarlo.", "name": "Carla M.", "meta": "Compra verificada · Miraflores, Lima" } },
+        { "type": "quote", "settings": { "text": "Lo pedí sin pagar nada por adelantado y llegó en dos días. Me lo probé, me quedó perfecto y recién ahí pagué. Súper cómodo el sistema.", "name": "Diego R.", "meta": "Compra verificada · Trujillo" } },
+        { "type": "quote", "settings": { "text": "Lo uso debajo del polo en el gimnasio y no se nota nada. Las almohadillas de las axilas son lo mejor, no roza para nada.", "name": "Andrea P.", "meta": "Compra verificada · Arequipa" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,44 @@
+<section class="section">
+  <div class="wrap">
+    <h1 class="h2 center" style="margin-bottom:2.2rem" data-reveal>Tu carrito</h1>
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate class="glass" style="padding:clamp(1.2rem,3vw,2rem)" data-reveal>
+        <table class="cart-table">
+          <thead><tr><th colspan="2">Producto</th><th>Cantidad</th><th style="text-align:right">Total</th></tr></thead>
+          <tbody>
+            {%- for item in cart.items -%}
+              <tr>
+                <td style="width:90px">{%- if item.image -%}<img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" width="74" height="74">{%- endif -%}</td>
+                <td>
+                  <a href="{{ item.url }}" style="font-weight:600">{{ item.product.title }}</a>
+                  {%- unless item.product.has_only_default_variant -%}<div class="cart-props">{{ item.variant.title }}</div>{%- endunless -%}
+                  {%- if item.properties != blank -%}
+                    <div class="cart-props">
+                      {%- for p in item.properties -%}{%- unless p.last == blank or p.first contains '_' -%}{{ p.first }}: {{ p.last }}<br>{%- endunless -%}{%- endfor -%}
+                    </div>
+                  {%- endif -%}
+                </td>
+                <td><input class="field" style="width:76px;padding:.55rem .7rem;background:rgba(255,255,255,.045);border:1px solid var(--glass-line);border-radius:10px" type="number" name="updates[]" value="{{ item.quantity }}" min="0"></td>
+                <td style="text-align:right;font-weight:600">{{ item.final_line_price | money_without_trailing_zeros }}</td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+        <hr class="hairline" style="margin:1.6rem 0">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem">
+          <div><span class="muted small">Subtotal</span><div class="price-row__now">{{ cart.total_price | money_without_trailing_zeros }}</div><span class="muted small">El envío se calcula en el checkout.</span></div>
+          <div style="display:flex;gap:.7rem;flex-wrap:wrap">
+            <button class="btn btn--glass" type="submit" name="update"><span class="btn__label">Actualizar</span></button>
+            <button class="btn btn--warm" type="submit" name="checkout"><span class="btn__label">Finalizar pedido</span></button>
+          </div>
+        </div>
+      </form>
+    {%- else -%}
+      <div class="empty-state"><p class="lead">Tu carrito está vacío.</p><a class="btn btn--warm" href="{{ routes.root_url }}"><span class="btn__label">Ver el producto</span></a></div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Carrito", "tag": "section", "settings": [] }
+{% endschema %}

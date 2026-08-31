@@ -1,0 +1,67 @@
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__grid">
+      <div>
+        <p class="logo grad-warm" style="margin-bottom:.9rem">{{ section.settings.brand | default: shop.name }}</p>
+        <p class="small muted" style="max-width:34ch">{{ section.settings.about }}</p>
+        <div style="display:flex;gap:.7rem;margin-top:1.1rem">
+          {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}
+          {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" target="_blank" rel="noopener">Facebook</a>{%- endif -%}
+          {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener">TikTok</a>{%- endif -%}
+        </div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'links' -%}
+          <div {{ block.shopify_attributes }}>
+            <h4>{{ block.settings.title }}</h4>
+            <ul>
+              {%- for link in block.settings.menu.links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      <div>
+        <h4>Atención al cliente</h4>
+        <p class="small muted">{{ section.settings.hours }}</p>
+        {%- if settings.whatsapp_number != blank -%}
+          <a class="btn btn--glass" style="margin-top:.9rem;padding:.7rem 1.2rem;font-size:.88rem"
+             href="https://wa.me/{{ settings.whatsapp_number | remove: '+' | remove: ' ' | remove: '-' }}" target="_blank" rel="noopener">
+            {% render 'icon', name: 'whatsapp', size: 17 %}<span class="btn__label">WhatsApp</span>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="ftr__bottom">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Todos los derechos reservados.</span>
+      <span>{{ section.settings.legal }}</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pie de página",
+  "settings": [
+    { "type": "text", "id": "brand", "label": "Nombre de marca", "default": "MAERK" },
+    { "type": "textarea", "id": "about", "label": "Descripción", "default": "Productos de bienestar y postura seleccionados uno por uno. Envíos a todo el Perú con pago contraentrega." },
+    { "type": "textarea", "id": "hours", "label": "Horario de atención", "default": "Lunes a sábado de 9:00 a 19:00. Respondemos por WhatsApp en menos de 1 hora." },
+    { "type": "text", "id": "legal", "label": "Línea legal", "default": "Este producto no reemplaza el diagnóstico de un profesional de la salud." }
+  ],
+  "blocks": [
+    {
+      "type": "links",
+      "name": "Columna de enlaces",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Ayuda" },
+        { "type": "link_list", "id": "menu", "label": "Menú", "default": "footer" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Pie de página" }]
+}
+{% endschema %}

@@ -1,0 +1,57 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "MAERK — Cristal Cálido",
+    "theme_version": "1.0.0",
+    "theme_author": "MAERK",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://help.shopify.com/"
+  },
+  {
+    "name": "Colores",
+    "settings": [
+      { "type": "header", "content": "Base negra" },
+      { "type": "color", "id": "color_bg", "label": "Fondo principal", "default": "#08070A" },
+      { "type": "color", "id": "color_bg_2", "label": "Fondo secundario", "default": "#100D0E" },
+      { "type": "color", "id": "color_text", "label": "Texto", "default": "#F3ECE2" },
+      { "type": "color", "id": "color_muted", "label": "Texto suave", "default": "#A79A8B" },
+      { "type": "header", "content": "Acento cálido" },
+      { "type": "color", "id": "color_warm", "label": "Dorado", "default": "#E8B04B" },
+      { "type": "color", "id": "color_warm_light", "label": "Dorado claro", "default": "#F6D28A" },
+      { "type": "color", "id": "color_bronze", "label": "Bronce", "default": "#B9762F" }
+    ]
+  },
+  {
+    "name": "Tipografía",
+    "settings": [
+      { "type": "font_picker", "id": "type_header_font", "label": "Títulos", "default": "poppins_n6" },
+      { "type": "font_picker", "id": "type_body_font", "label": "Texto", "default": "assistant_n4" }
+    ]
+  },
+  {
+    "name": "Diseño",
+    "settings": [
+      { "type": "range", "id": "page_width", "label": "Ancho de página", "min": 1000, "max": 1600, "step": 20, "unit": "px", "default": 1200 },
+      { "type": "range", "id": "corner_radius", "label": "Redondeo de tarjetas", "min": 0, "max": 34, "step": 2, "unit": "px", "default": 22 },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" },
+      { "type": "image_picker", "id": "logo", "label": "Logo (opcional)" },
+      { "type": "range", "id": "logo_width", "label": "Ancho del logo", "min": 60, "max": 260, "step": 10, "unit": "px", "default": 130 }
+    ]
+  },
+  {
+    "name": "WhatsApp",
+    "settings": [
+      { "type": "paragraph", "content": "Botón flotante de WhatsApp. Deja vacío para ocultarlo." },
+      { "type": "text", "id": "whatsapp_number", "label": "Número con código de país", "info": "Ejemplo para Perú: 51987654321", "default": "51987654321" },
+      { "type": "text", "id": "whatsapp_message", "label": "Mensaje precargado", "default": "Hola MAERK, quiero información del corrector de postura" }
+    ]
+  },
+  {
+    "name": "Redes sociales",
+    "settings": [
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_facebook", "label": "Facebook" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" }
+    ]
+  }
+]

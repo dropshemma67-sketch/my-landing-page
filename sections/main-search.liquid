@@ -1,0 +1,25 @@
+<section class="section">
+  <div class="wrap">
+    <div class="head-block">
+      <h1 class="h2" data-reveal>Buscar</h1>
+      <form action="{{ routes.search_url }}" method="get" class="field" style="width:100%;max-width:520px" data-reveal>
+        <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="¿Qué estás buscando?">
+      </form>
+    </div>
+    {%- if search.performed -%}
+      <p class="center muted small" style="margin-bottom:2rem">{{ search.results_count }} resultado(s) para “{{ search.terms }}”</p>
+      <div class="grid-4">
+        {%- for item in search.results -%}
+          <a class="glass glass-hover sheen pcard" href="{{ item.url }}" data-reveal>
+            {%- if item.image -%}<img src="{{ item.image | image_url: width: 600 }}" alt="{{ item.title | escape }}" width="600" height="600" loading="lazy">{%- endif -%}
+            <span class="pcard__t">{{ item.title }}</span>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Búsqueda", "tag": "section", "settings": [] }
+{% endschema %}

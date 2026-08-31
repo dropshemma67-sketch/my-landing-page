@@ -1,0 +1,148 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "number": "4.8", "suffix": "/5", "label": "Valoración" } },
+        "s2": { "type": "stat", "settings": { "number": "2400", "suffix": "+", "label": "Pedidos entregados" } },
+        "s3": { "type": "stat", "settings": { "number": "24", "suffix": "h", "label": "Despacho en Lima" } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "eyebrow": "Corrector de postura MAERK",
+        "title": "Endereza tu espalda",
+        "title_accent": "sin pensarlo.",
+        "subtitle": "Soporte en X que alinea hombros y columna mientras trabajas, entrenas o manejas. Se ajusta en segundos, es transpirable y no se nota debajo de la ropa.",
+        "price_currency": "S/",
+        "price_amount": "60",
+        "price_note": "· pagas al recibir",
+        "cta_text": "Pedir contraentrega",
+        "cta_url": "#comprar",
+        "cta2_text": "Ver cómo funciona",
+        "cta2_url": "#como-funciona",
+        "badge_a": "Envío gratis",
+        "badge_b": "Pagas al recibir",
+        "show_scroll": true
+      }
+    },
+    "trust": {
+      "type": "trust-bar",
+      "blocks": {
+        "t1": { "type": "item", "settings": { "icon": "wallet", "title": "Pago contraentrega", "text": "Pagas cuando lo recibes" } },
+        "t2": { "type": "item", "settings": { "icon": "truck", "title": "Envío gratis", "text": "A todo el Perú" } },
+        "t3": { "type": "item", "settings": { "icon": "refresh", "title": "Cambio por talla", "text": "Dentro de 7 días" } },
+        "t4": { "type": "item", "settings": { "icon": "shield", "title": "Atención real", "text": "Respondemos por WhatsApp" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"],
+      "settings": {}
+    },
+    "benefits": {
+      "type": "benefits",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "spine", "title": "Alinea hombros y columna", "text": "El diseño en X abre el pecho y lleva los hombros atrás sin forzar. Notas la diferencia desde el primer día de uso." } },
+        "b2": { "type": "benefit", "settings": { "icon": "feather", "title": "Invisible bajo la ropa", "text": "Tiras delgadas y transpirables de apenas unos gramos. Úsalo con camisa, polo o vestido y nadie lo nota." } },
+        "b3": { "type": "benefit", "settings": { "icon": "sliders", "title": "Talla única ajustable", "text": "Correas con velcro que se regulan al torso. Sirve de 65 a 115 cm de contorno, para hombres y mujeres." } },
+        "b4": { "type": "benefit", "settings": { "icon": "clock", "title": "Listo en 10 segundos", "text": "Te lo pones como una mochila y ajustas la banda inferior. Sin ayuda y sin broches complicados." } },
+        "b5": { "type": "benefit", "settings": { "icon": "heart", "title": "Acolchado que no roza", "text": "Almohadillas en axilas y espalda para usarlo horas seguidas sin marcas ni molestias." } },
+        "b6": { "type": "benefit", "settings": { "icon": "check-circle", "title": "Uso progresivo", "text": "Empieza con 20 minutos y sube hasta 2 horas al día. Tu espalda aprende la postura correcta sola." } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4", "b5", "b6"],
+      "settings": {
+        "anchor": "beneficios",
+        "eyebrow": "Por qué funciona",
+        "title": "Diseñado para que lo uses todos los días",
+        "subtitle": "No es una faja rígida. Es un soporte en X que te recuerda tu postura sin bloquearte el movimiento."
+      }
+    },
+    "buy": {
+      "type": "product-cod",
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "text": "Diseño en X que alinea hombros sin forzar la espalda" } },
+        "f2": { "type": "feature", "settings": { "text": "Tela transpirable con acolchado en axilas y espalda" } },
+        "f3": { "type": "feature", "settings": { "text": "Talla única regulable de 65 a 115 cm de contorno" } },
+        "f4": { "type": "feature", "settings": { "text": "Invisible bajo la ropa · unisex · lavable a mano" } },
+        "q1": { "type": "quantity", "settings": { "label": "1 unidad", "qty": "1", "price": "S/ 60" } },
+        "q2": { "type": "quantity", "settings": { "label": "2 unidades", "qty": "2", "price": "S/ 120" } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4", "q1", "q2"],
+      "settings": {
+        "anchor": "comprar",
+        "title": "Corrector de Postura MAERK",
+        "tagline": "Soporte en X ajustable · Talla única · Unisex",
+        "price_text": "S/ 60",
+        "price_badge": "Envío gratis",
+        "show_rating": true,
+        "rating_text": "4.8 · 312 reseñas",
+        "form_title": "Completa tus datos y recíbelo en casa",
+        "submit_mode": "checkout",
+        "submit_text": "Confirmar pedido contraentrega",
+        "reassurance": "No pagas nada ahora. Te escribimos para confirmar la entrega y pagas en efectivo cuando recibas tu pedido.",
+        "payline": "Tus datos viajan cifrados y solo se usan para la entrega",
+        "show_sticky": true,
+        "sticky_text": "Pedir ahora"
+      }
+    },
+    "how": {
+      "type": "how-it-works",
+      "blocks": {
+        "p1": { "type": "step", "settings": { "title": "Póntelo como mochila", "text": "Pasa los brazos por las dos tiras acolchadas. La X queda centrada en la parte alta de tu espalda." } },
+        "p2": { "type": "step", "settings": { "title": "Ajusta el velcro", "text": "Cierra la banda inferior a la altura del pecho y regula las correas hasta sentir un soporte firme pero cómodo." } },
+        "p3": { "type": "step", "settings": { "title": "Súbelo de a pocos", "text": "Empieza con 20 a 30 minutos al día y aumenta cada semana hasta 2 horas. Tu espalda hace el resto." } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "anchor": "como-funciona",
+        "eyebrow": "Tres pasos",
+        "title": "Póntelo, ajústalo, olvídate",
+        "subtitle": "No necesitas ayuda ni instrucciones largas. En menos de un minuto ya lo estás usando.",
+        "cta_text": "Quiero el mío",
+        "cta_url": "#comprar"
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "r1": { "type": "quote", "settings": { "text": "Trabajo 9 horas en laptop y terminaba con el cuello durísimo. Llevo tres semanas usándolo y la diferencia es real: me siento derecha sin pensarlo.", "name": "Carla M.", "meta": "Compra verificada · Miraflores, Lima" } },
+        "r2": { "type": "quote", "settings": { "text": "Lo pedí sin pagar nada por adelantado y llegó en dos días. Me lo probé, me quedó perfecto y recién ahí pagué. Súper cómodo el sistema.", "name": "Diego R.", "meta": "Compra verificada · Trujillo" } },
+        "r3": { "type": "quote", "settings": { "text": "Lo uso debajo del polo en el gimnasio y no se nota nada. Las almohadillas de las axilas son lo mejor, no roza para nada.", "name": "Andrea P.", "meta": "Compra verificada · Arequipa" } }
+      },
+      "block_order": ["r1", "r2", "r3"],
+      "settings": {
+        "anchor": "resenas",
+        "eyebrow": "Lo que dicen",
+        "title": "Personas que ya cambiaron su postura",
+        "subtitle": "Reseñas de clientes que recibieron su pedido contraentrega."
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": { "type": "faq", "settings": { "q": "¿Cómo funciona el pago contraentrega?", "a": "No pagas nada al hacer el pedido. Te escribimos por WhatsApp para confirmar tu dirección, enviamos el producto y pagas en efectivo al repartidor cuando lo recibes." } },
+        "q2": { "type": "faq", "settings": { "q": "¿Cuánto demora el envío?", "a": "En Lima Metropolitana entre 24 y 48 horas hábiles. A provincias entre 2 y 5 días hábiles según el destino. El envío es gratis en todo el Perú." } },
+        "q3": { "type": "faq", "settings": { "q": "¿Qué talla debo pedir?", "a": "Es talla única regulable. Las correas se ajustan con velcro y sirven para contornos de pecho de 65 a 115 cm aproximadamente, tanto para hombres como para mujeres." } },
+        "q4": { "type": "faq", "settings": { "q": "¿Cuántas horas al día debo usarlo?", "a": "Empieza con 20 a 30 minutos diarios la primera semana y sube poco a poco hasta un máximo de 2 horas al día. No se recomienda dormir con él puesto." } },
+        "q5": { "type": "faq", "settings": { "q": "¿Se nota debajo de la ropa?", "a": "Las tiras son delgadas y planas, así que bajo un polo, camisa o blusa pasa desapercibido. Con ropa muy ajustada puede notarse ligeramente la línea de la espalda." } },
+        "q6": { "type": "faq", "settings": { "q": "¿Puedo cambiarlo si no me acomoda?", "a": "Sí. Tienes 7 días desde la entrega para solicitar el cambio, siempre que el producto esté en buen estado y con su empaque. Escríbenos por WhatsApp y lo coordinamos." } },
+        "q7": { "type": "faq", "settings": { "q": "¿Cómo lo lavo?", "a": "A mano con agua fría y jabón neutro. Cierra los velcros antes de lavarlo y déjalo secar a la sombra. No usar secadora ni lejía." } },
+        "q8": { "type": "faq", "settings": { "q": "¿Sirve si tengo dolor de espalda diagnosticado?", "a": "El corrector es un apoyo para mejorar el hábito postural, no un tratamiento médico. Si tienes una lesión, hernia o dolor persistente, consulta antes con tu médico o fisioterapeuta." } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8"],
+      "settings": { "anchor": "preguntas", "eyebrow": "Dudas resueltas", "title": "Preguntas frecuentes" }
+    },
+    "cta": {
+      "type": "cta-final",
+      "settings": {
+        "anchor": "cta",
+        "eyebrow": "Último paso",
+        "title": "Tu espalda te lo va a",
+        "title_accent": "agradecer.",
+        "text": "Haz tu pedido hoy, recíbelo en casa y paga recién cuando lo tengas en la mano. Sin riesgo, sin adelantos.",
+        "cta_text": "Pedir contraentrega",
+        "cta_url": "#comprar",
+        "show_wa": true,
+        "footnote": "Envío gratis a todo el Perú · Cambio por talla dentro de 7 días"
+      }
+    }
+  },
+  "order": ["hero", "trust", "benefits", "buy", "how", "reviews", "faq", "cta"]
+}

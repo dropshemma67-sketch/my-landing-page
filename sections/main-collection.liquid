@@ -1,0 +1,34 @@
+{%- paginate collection.products by 24 -%}
+<section class="section">
+  <div class="wrap">
+    <div class="head-block">
+      <h1 class="h2" data-reveal>{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}<div class="lead rte" data-reveal>{{ collection.description }}</div>{%- endif -%}
+    </div>
+    {%- if collection.products.size > 0 -%}
+      <div class="grid-4">
+        {%- for product in collection.products -%}
+          <a class="glass glass-hover sheen pcard" href="{{ product.url }}" data-reveal data-delay="{{ forloop.index0 | times: 0.05 }}">
+            {%- if product.featured_image -%}
+              <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title | escape }}" width="600" height="600" loading="lazy">
+            {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+            <span class="pcard__t">{{ product.title }}</span>
+            <span class="pcard__p">{{ product.price | money_without_trailing_zeros }}</span>
+          </a>
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <div class="center" style="margin-top:2.4rem">{{ paginate | default_pagination }}</div>
+      {%- endif -%}
+    {%- else -%}
+      <div class="empty-state"><p class="lead">Todavía no hay productos en esta colección.</p><a class="btn btn--warm" href="{{ routes.root_url }}"><span class="btn__label">Volver al inicio</span></a></div>
+    {%- endif -%}
+  </div>
+</section>
+{%- endpaginate -%}
+
+{% schema %}
+{ "name": "Colección", "tag": "section", "settings": [] }
+{% endschema %}

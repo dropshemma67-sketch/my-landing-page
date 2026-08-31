@@ -1,0 +1,69 @@
+<section class="section" id="{{ section.settings.anchor | default: 'beneficios' }}">
+  <div class="aura" style="opacity:.5"><span class="aura__blob aura__blob--3"></span></div>
+  <div class="wrap" style="position:relative;z-index:2">
+    <div class="head-block">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow" data-reveal><i class="dot"></i>{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="h2" data-reveal data-delay="0.06">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="lead" data-reveal data-delay="0.12">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="grid-3">
+      {%- for block in section.blocks -%}
+        <article class="glass glass-hover sheen card" data-reveal data-delay="{{ forloop.index0 | times: 0.08 }}" {{ block.shopify_attributes }}>
+          <span class="card__ico">{% render 'icon', name: block.settings.icon, size: 24 %}</span>
+          <h3 class="h3">{{ block.settings.title }}</h3>
+          <p class="muted small">{{ block.settings.text }}</p>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Beneficios",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancla (id)", "default": "beneficios" },
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Por qué funciona" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Diseñado para que lo uses todos los días" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "No es una faja rígida. Es un soporte en X que te recuerda tu postura sin bloquearte el movimiento." }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Alivio en la zona alta" },
+        { "type": "textarea", "id": "text", "label": "Texto", "default": "Reduce la tensión de hombros y cuello después de horas frente a la pantalla." },
+        {
+          "type": "select", "id": "icon", "label": "Ícono", "default": "spine",
+          "options": [
+            { "value": "spine", "label": "Columna" }, { "value": "feather", "label": "Ligero" },
+            { "value": "sliders", "label": "Ajustable" }, { "value": "heart", "label": "Bienestar" },
+            { "value": "clock", "label": "Tiempo" }, { "value": "shield", "label": "Escudo" },
+            { "value": "check-circle", "label": "Check" }, { "value": "refresh", "label": "Cambio" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Beneficios",
+      "blocks": [
+        { "type": "benefit", "settings": { "icon": "spine", "title": "Alinea hombros y columna", "text": "El diseño en X abre el pecho y lleva los hombros atrás sin forzar. Notas la diferencia desde el primer día." } },
+        { "type": "benefit", "settings": { "icon": "feather", "title": "Invisible bajo la ropa", "text": "Tiras delgadas y transpirables de solo unos gramos. Puedes usarlo con camisa, polo o vestido y nadie lo nota." } },
+        { "type": "benefit", "settings": { "icon": "sliders", "title": "Talla única ajustable", "text": "Correas con velcro que se regulan al torso. Sirve de 65 a 115 cm de contorno, para hombres y mujeres." } },
+        { "type": "benefit", "settings": { "icon": "clock", "title": "Listo en 10 segundos", "text": "Te lo pones como una mochila y ajustas la banda inferior. Sin ayuda, sin broches complicados." } },
+        { "type": "benefit", "settings": { "icon": "heart", "title": "Acolchado que no roza", "text": "Almohadillas en axilas y espalda para que puedas usarlo horas seguidas sin marcas ni molestias." } },
+        { "type": "benefit", "settings": { "icon": "check-circle", "title": "Uso progresivo", "text": "Empieza con 20 minutos y sube hasta 2 horas al día. Tu espalda aprende la postura correcta sola." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

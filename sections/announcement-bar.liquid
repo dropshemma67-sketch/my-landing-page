@@ -1,0 +1,44 @@
+{%- if section.blocks.size > 0 -%}
+<div class="announce">
+  <div class="marquee" aria-hidden="false">
+    {%- for i in (1..2) -%}
+      <div class="marquee__group">
+        {%- for block in section.blocks -%}
+          <span {{ block.shopify_attributes }}>
+            {% render 'icon', name: block.settings.icon, size: 15 %}
+            {{ block.settings.text }}
+          </span>
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Barra de anuncios",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Mensaje",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "Envío gratis a todo el Perú" },
+        {
+          "type": "select", "id": "icon", "label": "Ícono", "default": "truck",
+          "options": [
+            { "value": "truck", "label": "Camión" },
+            { "value": "wallet", "label": "Billetera" },
+            { "value": "shield", "label": "Escudo" },
+            { "value": "check", "label": "Check" },
+            { "value": "clock", "label": "Reloj" },
+            { "value": "star", "label": "Estrella" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Barra de anuncios" }]
+}
+{% endschema %}

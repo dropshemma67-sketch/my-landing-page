@@ -1,0 +1,7 @@
+{%- if image != blank -%}
+  <button type="button" class="thumb{% if active %} is-active{% endif %}"
+          data-gallery-thumb data-src="{{ image | image_url: width: 1200 }}"
+          aria-label="Ver imagen {{ index }}">
+    <img src="{{ image | image_url: width: 300 }}" alt="" width="300" height="300" loading="lazy">
+  </button>
+{%- endif -%}
