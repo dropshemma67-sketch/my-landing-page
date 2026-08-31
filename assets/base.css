@@ -658,3 +658,34 @@ ul { margin: 0; padding: 0; list-style: none; }
   .hero__float::before,
   .hero__float::after { animation: none !important; }
 }
+
+/* ============================================================
+   Opciones de oferta (packs con ahorro)
+   ============================================================ */
+.pack__main { display: grid; gap: .18rem; min-width: 0; }
+.pack__t { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.pack__sub { font-size: .8rem; color: var(--muted); }
+.pack__badge {
+  font-style: normal;
+  font-size: .62rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #1A1206;
+  background: linear-gradient(135deg, var(--warm-2), var(--warm));
+  padding: .2rem .5rem;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+.pack__prices { margin-left: auto; display: grid; justify-items: end; gap: .1rem; line-height: 1.2; }
+.pack__prices .pack__p { margin-left: 0; }
+.pack__was { font-size: .8rem; color: var(--muted); text-decoration-thickness: 1px; }
+
+/* La opción destacada se nota sin necesidad de estar seleccionada */
+.pack--featured { border-color: rgba(232, 176, 75, .40); background: rgba(232, 176, 75, .05); }
+.pack--featured.is-active { border-color: var(--warm); background: rgba(232, 176, 75, .11); }
+
+@media (max-width: 420px) {
+  .pack { gap: .6rem; padding: .85rem .9rem; }
+  .pack__badge { font-size: .58rem; padding: .16rem .42rem; }
+}

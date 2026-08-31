@@ -40,7 +40,7 @@
         "subtitle": "Soporte en X de doble ajuste que alinea hombros y columna mientras trabajas, entrenas o manejas. Cuero PU acolchado con perforaciones que respiran, en tallas S y M. Úsalo bajo la ropa o encima, en la oficina, el gimnasio o en casa.",
         "price_currency": "S/",
         "price_amount": "60",
-        "price_note": "· pagas al recibir",
+        "price_note": "· o lleva 2 por S/ 90",
         "cta_text": "Pedir contraentrega",
         "cta_url": "#comprar",
         "cta2_text": "Ver cómo funciona",
@@ -194,7 +194,11 @@
           "settings": {
             "label": "1 unidad",
             "qty": "1",
-            "price": "S/ 60"
+            "price": "S/ 60",
+            "compare": "",
+            "sub": "Envío gratis",
+            "badge": "",
+            "featured": false
           }
         },
         "q2": {
@@ -202,7 +206,11 @@
           "settings": {
             "label": "2 unidades",
             "qty": "2",
-            "price": "S/ 120"
+            "price": "S/ 90",
+            "compare": "S/ 120",
+            "sub": "Ahorras S/ 30 · te sale a S/ 45 cada uno",
+            "badge": "Más pedido",
+            "featured": true
           }
         },
         "s1": {
@@ -431,7 +439,7 @@
         "cta_text": "Pedir contraentrega",
         "cta_url": "#comprar",
         "show_wa": true,
-        "footnote": "Envío gratis a todo el Perú · Cambio por talla dentro de 7 días"
+        "footnote": "Lleva 2 por S/ 90 · Envío gratis a todo el Perú · Cambio por talla dentro de 7 días"
       }
     }
   },

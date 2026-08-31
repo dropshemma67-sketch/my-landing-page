@@ -130,10 +130,25 @@
               <p class="tiny" style="color:var(--warm-2);margin-bottom:.55rem">Cantidad</p>
               <div class="packs" data-packs>
                 {%- for block in qty_blocks -%}
-                  <label class="pack{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
+                  <label class="pack{% if block.settings.featured %} pack--featured{% endif %}{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
                     <input type="radio" name="cod-qty" data-qty="{{ block.settings.qty }}" {% if forloop.first %}checked{% endif %}>
-                    <span class="pack__t">{{ block.settings.label }}</span>
-                    <span class="pack__p">{{ block.settings.price }}</span>
+                    <span class="pack__main">
+                      <span class="pack__t">
+                        {{ block.settings.label }}
+                        {%- if block.settings.badge != blank -%}
+                          <em class="pack__badge">{{ block.settings.badge }}</em>
+                        {%- endif -%}
+                      </span>
+                      {%- if block.settings.sub != blank -%}
+                        <span class="pack__sub">{{ block.settings.sub }}</span>
+                      {%- endif -%}
+                    </span>
+                    <span class="pack__prices">
+                      <span class="pack__p">{{ block.settings.price }}</span>
+                      {%- if block.settings.compare != blank -%}
+                        <s class="pack__was">{{ block.settings.compare }}</s>
+                      {%- endif -%}
+                    </span>
                   </label>
                 {%- endfor -%}
               </div>
@@ -301,7 +316,11 @@
       "settings": [
         { "type": "text", "id": "label", "label": "Etiqueta", "default": "1 unidad" },
         { "type": "text", "id": "qty", "label": "Cantidad", "default": "1" },
-        { "type": "text", "id": "price", "label": "Precio mostrado", "default": "S/ 60" }
+        { "type": "text", "id": "price", "label": "Precio mostrado", "default": "S/ 60" },
+        { "type": "text", "id": "compare", "label": "Precio tachado", "info": "Solo si el descuento es real. Para un pack, el precio de esas mismas unidades sueltas." },
+        { "type": "text", "id": "sub", "label": "Línea de ahorro", "info": "Ej: Ahorras S/ 30 · S/ 45 cada uno" },
+        { "type": "text", "id": "badge", "label": "Insignia", "info": "Ej: MÁS PEDIDO" },
+        { "type": "checkbox", "id": "featured", "label": "Destacar esta opción", "default": false }
       ]
     }
   ],

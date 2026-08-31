@@ -18,12 +18,41 @@
       "announcement-bar": {
         "type": "announcement-bar",
         "blocks": {
-          "a1": { "type": "item", "settings": { "icon": "truck", "text": "Envío gratis a todo el Perú" } },
-          "a2": { "type": "item", "settings": { "icon": "wallet", "text": "Pagas al recibir tu pedido" } },
-          "a3": { "type": "item", "settings": { "icon": "shield", "text": "Cambio por talla dentro de 7 días" } },
-          "a4": { "type": "item", "settings": { "icon": "clock", "text": "Despacho en 24 h en Lima" } }
+          "a1": {
+            "type": "item",
+            "settings": {
+              "icon": "truck",
+              "text": "Envío gratis a todo el Perú"
+            }
+          },
+          "a2": {
+            "type": "item",
+            "settings": {
+              "icon": "wallet",
+              "text": "Pagas al recibir tu pedido"
+            }
+          },
+          "a3": {
+            "type": "item",
+            "settings": {
+              "icon": "star",
+              "text": "Lleva 2 por S/ 90 y ahorra S/ 30"
+            }
+          },
+          "a4": {
+            "type": "item",
+            "settings": {
+              "icon": "clock",
+              "text": "Despacho en 24 h en Lima"
+            }
+          }
         },
-        "block_order": ["a1", "a2", "a3", "a4"],
+        "block_order": [
+          "a1",
+          "a2",
+          "a3",
+          "a4"
+        ],
         "settings": {}
       },
       "header": {
@@ -37,10 +66,23 @@
       "footer": {
         "type": "footer",
         "blocks": {
-          "f1": { "type": "links", "settings": { "title": "Tienda" } },
-          "f2": { "type": "links", "settings": { "title": "Ayuda" } }
+          "f1": {
+            "type": "links",
+            "settings": {
+              "title": "Tienda"
+            }
+          },
+          "f2": {
+            "type": "links",
+            "settings": {
+              "title": "Ayuda"
+            }
+          }
         },
-        "block_order": ["f1", "f2"],
+        "block_order": [
+          "f1",
+          "f2"
+        ],
         "settings": {
           "brand": "MAERK",
           "about": "Productos de bienestar y postura seleccionados uno por uno. Envíos a todo el Perú con pago contraentrega.",
