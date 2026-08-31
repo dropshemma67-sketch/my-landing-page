@@ -217,6 +217,32 @@
   }
 
   /* ---------- Formulario contraentrega ---------- */
+  /* Prellena el checkout con lo que el cliente ya escribió, para que no lo
+     teclee dos veces. Shopify ha sido inconsistente con estos parámetros, así
+     que es un extra: si los ignora, el pedido igual sale bien porque los datos
+     ya viajan como propiedades del artículo.
+     El departamento se omite a propósito: el checkout espera un código de
+     región, y mandar el nombre completo puede dejar el campo en un estado
+     inválido, que es peor que dejarlo vacío. */
+  function prefillQuery(props) {
+    var full = (props['Nombre'] || '').trim();
+    var space = full.indexOf(' ');
+    var pairs = {
+      'checkout[shipping_address][first_name]': space > 0 ? full.slice(0, space) : full,
+      'checkout[shipping_address][last_name]':  space > 0 ? full.slice(space + 1) : '',
+      'checkout[shipping_address][address1]':   props['Dirección'] || '',
+      'checkout[shipping_address][address2]':   props['Referencia'] || '',
+      'checkout[shipping_address][city]':       props['Distrito'] || '',
+      'checkout[shipping_address][phone]':      props['Celular'] || ''
+    };
+    var parts = [];
+    Object.keys(pairs).forEach(function (k) {
+      var v = (pairs[k] || '').trim();
+      if (v) parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(v));
+    });
+    return parts.length ? '?' + parts.join('&') : '';
+  }
+
   function initCod() {
     document.querySelectorAll('[data-cod-form]').forEach(function (form) {
       if (!once(form, 'Cod')) return;
@@ -308,7 +334,8 @@
           .then(function (res) {
             if (!res.ok) throw new Error(res.data.description || res.data.message || 'No se pudo agregar el producto');
             if (status) { status.className = 'cod__status is-ok'; status.textContent = '¡Listo! Te llevamos a confirmar tu pedido…'; }
-            window.location.href = (window.Shopify && window.Shopify.routes ? window.Shopify.routes.root : '/') + 'checkout';
+            var root = (window.Shopify && window.Shopify.routes) ? window.Shopify.routes.root : '/';
+            window.location.href = root + 'checkout' + prefillQuery(props);
           })
           .catch(function (err) {
             if (btn) btn.classList.remove('is-loading');

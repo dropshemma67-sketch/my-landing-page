@@ -241,11 +241,12 @@
         "form_title": "Completa tus datos y recíbelo en casa",
         "submit_mode": "checkout",
         "submit_text": "Confirmar pedido contraentrega",
-        "reassurance": "No pagas nada ahora. Te escribimos para confirmar la entrega y pagas en efectivo cuando recibas tu pedido.",
+        "reassurance": "No pagas nada ahora. En el siguiente paso pones tu dirección, te escribimos para confirmar la entrega y pagas en efectivo cuando recibas tu pedido.",
         "payline": "Tus datos viajan cifrados y solo se usan para la entrega",
         "show_sticky": true,
         "sticky_text": "Pedir ahora",
-        "size_help": "Elige la misma talla que usas en polos, camisas o blusas. S cubre de 46 a 68 cm de contorno y M de 68 a 91 cm. Si estás entre dos, pide la M."
+        "size_help": "Elige la misma talla que usas en polos, camisas o blusas. S cubre de 46 a 68 cm de contorno y M de 68 a 91 cm. Si estás entre dos, pide la M.",
+        "form_mode": "short"
       }
     },
     "how": {

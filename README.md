@@ -91,19 +91,44 @@ para que el cliente no vea opciones que no aplican.
 
 ## 5. Cómo funciona el formulario
 
-El formulario de la página valida los datos en el navegador y luego:
+Tiene dos modos, en *Producto + contraentrega → **Datos de entrega***:
 
-1. Agrega el producto al carrito con los datos del cliente como **propiedades de línea**
-   (Nombre, Celular, Departamento, Distrito, Dirección, Referencia, Forma de pago).
-2. Redirige al **checkout de Shopify**, donde el cliente confirma y elige *Pago contraentrega*.
+**Solo en el checkout (por defecto).** En la página el cliente elige talla y cantidad
+y toca el botón. La dirección se pide una única vez, en el checkout de Shopify.
+Es el modo correcto si usas **Dropi** o cualquier proveedor que lee el pedido desde
+Shopify: esos servicios leen la **dirección de envío del pedido**, no lo que se escriba
+en la página, así que pedirla dos veces solo agrega fricción y pierde ventas.
 
-Los datos quedan visibles en **Pedidos → (el pedido) → detalle del artículo**.
+**También en esta página.** Muestra el formulario largo (nombre, celular, departamento,
+distrito, dirección, referencia). Los datos se guardan como propiedades del artículo y
+además se intenta prellenar el checkout con ellos. Ese prellenado es un extra: Shopify
+ha sido inconsistente con esos parámetros, así que puede que el cliente tenga que
+reescribir algo. El pedido sale bien igual.
 
-También puedes cambiar el modo en el personalizador:
-**«Al enviar el pedido» → Enviar por WhatsApp** (abre un chat con el resumen del pedido en vez de ir al checkout).
-Ese modo **no** crea un pedido en Shopify — úsalo solo si prefieres gestionar todo por chat.
+En ambos modos, al enviar:
 
----
+1. Se agrega el producto al carrito con la talla elegida y los datos que haya.
+2. Se redirige al **checkout de Shopify**, donde el cliente confirma y elige
+   *Pago contraentrega*.
+
+Los datos quedan en **Pedidos → (el pedido)**: la dirección arriba, y lo que venga del
+formulario en el detalle del artículo.
+
+También puedes cambiar **«Al enviar el pedido» → Enviar por WhatsApp**, que abre un chat
+con el resumen en vez de ir al checkout. Ese modo **no** crea un pedido en Shopify, así
+que **no llega a Dropi** — úsalo solo si gestionas todo a mano por chat.
+
+### Si tu proveedor es Dropi
+
+1. En **Dropi → Mis Integraciones → Agregar** creas la integración de Shopify y copias el **token**.
+2. Instalas la app **Dropify** en Shopify y pegas ahí el token.
+3. **Importa el producto desde el catálogo de Dropi** con Dropify — no lo crees a mano,
+   o Dropi no sabrá qué despachar. Después le cambias el precio de venta a S/ 60.
+4. Deja *Datos de entrega* en **Solo en el checkout**.
+5. Los pedidos se sincronizan solos cada 5–10 minutos.
+
+Si las variantes que trae Dropi no se llaman `S` y `M` a secas, ajusta el campo **Talla**
+de cada bloque para que coincida con el texto de la variante.
 
 ## 6. Personalizar el diseño
 

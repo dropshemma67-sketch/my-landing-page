@@ -140,6 +140,14 @@
             </div>
           {%- endif -%}
 
+          {%- comment -%}
+            Modo «corto»: aquí solo se elige talla y cantidad; la dirección se
+            pide una sola vez, en el checkout de Shopify. Es de donde Dropi lee
+            los datos de entrega, así que pedirla dos veces solo agrega fricción.
+            Modo «completo»: se piden los datos acá y se intenta prellenar el
+            checkout con ellos.
+          {%- endcomment -%}
+          {%- if section.settings.form_mode == 'full' -%}
           <p class="tiny" style="color:var(--warm-2);margin-top:.3rem">{{ section.settings.form_title }}</p>
 
           <div class="field">
@@ -188,6 +196,7 @@
             <textarea id="cod-ref" placeholder="Frente al parque, portón negro. Horario en que te encuentran."
                       data-prop="Referencia"></textarea>
           </div>
+          {%- endif -%}
 
           <div class="cod__status" data-cod-status role="status" aria-live="polite"></div>
 
@@ -244,6 +253,14 @@
     { "type": "image_picker", "id": "image_3", "label": "Imagen 3" },
     { "type": "image_picker", "id": "image_4", "label": "Imagen 4" },
     { "type": "header", "content": "Formulario" },
+    {
+      "type": "select", "id": "form_mode", "label": "Datos de entrega", "default": "short",
+      "info": "«Solo en el checkout» evita que el cliente escriba su dirección dos veces. Es lo recomendado si usas Dropi u otro proveedor que lee el pedido de Shopify.",
+      "options": [
+        { "value": "short", "label": "Solo en el checkout (recomendado)" },
+        { "value": "full", "label": "También en esta página" }
+      ]
+    },
     { "type": "text", "id": "form_title", "label": "Título del formulario", "default": "Completa tus datos y recíbelo en casa" },
     { "type": "textarea", "id": "size_help", "label": "Ayuda de tallas", "default": "Elige la misma talla que usas en polos, camisas o blusas. Si estás entre dos, pide la M." },
     {
