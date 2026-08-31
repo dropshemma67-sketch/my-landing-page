@@ -319,23 +319,35 @@
 
         if (btn) btn.classList.add('is-loading');
 
-        fetch(window.Shopify && window.Shopify.routes ? window.Shopify.routes.root + 'cart/add.js' : '/cart/add.js', {
+        var apiRoot = (window.Shopify && window.Shopify.routes) ? window.Shopify.routes.root : '/';
+
+        /* Vaciar el carrito antes de agregar. Es una tienda de un solo producto
+           y este formulario es un «pedir ahora»: sin esto, quien vuelve atrás y
+           envía el formulario otra vez termina con dos artículos y pagando el
+           doble sin darse cuenta. */
+        fetch(apiRoot + 'cart/clear.js', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({
-            items: [{
-              id: Number(variantId.value),
-              quantity: Number(qtyInput ? qtyInput.value : 1) || 1,
-              properties: props
-            }]
-          })
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
         })
+          .catch(function () { /* si falla, seguimos igual: es mejor un pedido que ninguno */ })
+          .then(function () {
+            return fetch(apiRoot + 'cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify({
+                items: [{
+                  id: Number(variantId.value),
+                  quantity: Number(qtyInput ? qtyInput.value : 1) || 1,
+                  properties: props
+                }]
+              })
+            });
+          })
           .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
           .then(function (res) {
             if (!res.ok) throw new Error(res.data.description || res.data.message || 'No se pudo agregar el producto');
             if (status) { status.className = 'cod__status is-ok'; status.textContent = '¡Listo! Te llevamos a confirmar tu pedido…'; }
-            var root = (window.Shopify && window.Shopify.routes) ? window.Shopify.routes.root : '/';
-            window.location.href = root + 'checkout' + prefillQuery(props);
+            window.location.href = apiRoot + 'checkout' + prefillQuery(props);
           })
           .catch(function (err) {
             if (btn) btn.classList.remove('is-loading');
