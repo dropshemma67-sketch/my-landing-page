@@ -203,6 +203,45 @@
     });
   }
 
+  /* ---------- Selector de cantidad ---------- */
+  function initQtyStepper() {
+    document.querySelectorAll('[data-qty-stepper]').forEach(function (root) {
+      if (!once(root, 'QtyStepper')) return;
+
+      var form   = root.closest('form');
+      var hidden = form && form.querySelector('[data-quantity-input]');
+      var total  = form && form.querySelector('[data-qty-total]');
+      var valEl  = root.querySelector('[data-qty-val]');
+      var minus  = root.querySelector('[data-qty-minus]');
+      var plus   = root.querySelector('[data-qty-plus]');
+
+      var unit = parseInt(root.getAttribute('data-unit') || '0', 10);
+      var cur  = root.getAttribute('data-currency') || '';
+      var max  = parseInt(root.getAttribute('data-max') || '5', 10);
+      if (!(max > 0)) max = 5;
+      var n = 1;
+
+      /* Los precios vienen en céntimos. Se muestran sin decimales cuando la
+         cifra es exacta, para que S/ 120 no salga como S/ 120.00. */
+      function money(cents) {
+        var v = cents / 100;
+        return cur + ' ' + (v % 1 === 0 ? v.toFixed(0) : v.toFixed(2));
+      }
+
+      function render() {
+        valEl.textContent = n;
+        if (hidden) hidden.value = n;
+        minus.disabled = n <= 1;
+        plus.disabled = n >= max;
+        if (total && unit > 0) total.textContent = money(unit * n);
+      }
+
+      minus.addEventListener('click', function () { if (n > 1) { n--; render(); } });
+      plus.addEventListener('click', function () { if (n < max) { n++; render(); } });
+      render();
+    });
+  }
+
   /* ---------- CTA fija en móvil ---------- */
   function initStickyCta() {
     var bar = document.querySelector('[data-sticky-cta]');
@@ -360,7 +399,7 @@
   /* ---------- Init ---------- */
   function boot() {
     initHeader(); initReveal(); initParallax(); initCounters();
-    initGallery(); initFaq(); initPacks(); initStickyCta(); initCod();
+    initGallery(); initFaq(); initPacks(); initQtyStepper(); initStickyCta(); initCod();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();

@@ -1,0 +1,44 @@
+
+/* ============================================================
+   Selector de cantidad
+   ============================================================ */
+.qty-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.qty {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, .03);
+  overflow: hidden;
+}
+.qty button {
+  width: 46px; height: 46px;
+  display: grid; place-items: center;
+  background: none; border: 0;
+  color: var(--text);
+  font-size: 1.25rem; line-height: 1;
+  transition: background .25s var(--ease), color .25s var(--ease);
+}
+.qty button:hover:not(:disabled) { background: rgba(232, 176, 75, .14); color: var(--warm-2); }
+.qty button:disabled { opacity: .28; cursor: not-allowed; }
+.qty__val {
+  min-width: 48px; text-align: center;
+  font-family: var(--font-head); font-weight: 700; font-size: 1.05rem;
+}
+.qty-total { text-align: right; line-height: 1.3; }
+.qty-total b {
+  font-family: var(--font-head);
+  font-size: 1.4rem;
+  color: var(--warm-2);
+  letter-spacing: -.02em;
+}
+@media (max-width: 420px) {
+  .qty-row { align-items: center; }
+  .qty button { width: 42px; height: 42px; }
+}

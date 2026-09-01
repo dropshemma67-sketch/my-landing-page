@@ -153,7 +153,34 @@
             </div>
           {%- endif -%}
 
+          {%- comment -%}
+            Selector de cantidad. Solo aparece si no hay bloques de cantidad
+            configurados: los dos controles escriben en el mismo campo oculto y
+            mostrar ambos dejaría al cliente sin saber cuál manda.
+          {%- endcomment -%}
           {%- assign qty_blocks = section.blocks | where: 'type', 'quantity' -%}
+          {%- if section.settings.show_qty_stepper and qty_blocks.size == 0 -%}
+            <div class="qty-row">
+              <div>
+                <p class="tiny" style="color:var(--warm-2);margin-bottom:.55rem">Cantidad</p>
+                <div class="qty" data-qty-stepper
+                     data-unit="{{ prod.price | default: 0 }}"
+                     data-currency="{{ cart.currency.symbol }}"
+                     data-max="{{ section.settings.qty_max }}">
+                  <button type="button" data-qty-minus aria-label="Quitar uno">&minus;</button>
+                  <span class="qty__val" data-qty-val aria-live="polite">1</span>
+                  <button type="button" data-qty-plus aria-label="Agregar uno">+</button>
+                </div>
+              </div>
+              {%- if prod != blank -%}
+                <div class="qty-total">
+                  <span class="tiny muted" style="letter-spacing:.06em">Total</span><br>
+                  <b data-qty-total>{{ prod.price | money_without_trailing_zeros }}</b>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
           {%- if qty_blocks.size > 0 -%}
             <div>
               <p class="tiny" style="color:var(--warm-2);margin-bottom:.55rem">Cantidad</p>
@@ -306,6 +333,8 @@
         { "value": "full", "label": "También en esta página" }
       ]
     },
+    { "type": "checkbox", "id": "show_qty_stepper", "label": "Mostrar selector de cantidad", "default": true },
+    { "type": "range", "id": "qty_max", "label": "Cantidad máxima por pedido", "min": 1, "max": 10, "step": 1, "default": 5 },
     { "type": "text", "id": "form_title", "label": "Título del formulario", "default": "Completa tus datos y recíbelo en casa" },
     { "type": "textarea", "id": "size_help", "label": "Ayuda de tallas", "default": "Elige la misma talla que usas en polos, camisas o blusas. Si estás entre dos, pide la M." },
     {
