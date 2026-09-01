@@ -1,0 +1,32 @@
+
+/* ============================================================
+   Precio tachado y porcentaje de descuento
+   ============================================================ */
+.price-row__was,
+.price-tag__was {
+  color: var(--muted);
+  font-size: 1.05rem;
+  text-decoration-thickness: 1px;
+}
+.price-row__off,
+.price-tag__off {
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: #1A1206;
+  background: linear-gradient(135deg, var(--warm-2), var(--warm));
+  padding: .28rem .6rem;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  align-self: center;
+}
+.save-line {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: -.5rem;
+  font-size: .88rem;
+  color: var(--warm-2);
+}
+.save-line svg { flex: 0 0 auto; }
+.price-tag { flex-wrap: wrap; }
