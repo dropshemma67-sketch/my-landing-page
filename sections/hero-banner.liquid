@@ -43,6 +43,11 @@
         {%- if prod != blank -%}
           <span class="price-tag__cur">{{ cart.currency.symbol }}</span>
           <span class="price-tag__num">{{ prod.price | divided_by: 100.0 | round: 0 }}</span>
+          {%- if prod.compare_at_price > prod.price -%}
+            {%- assign off_pct = prod.compare_at_price | minus: prod.price | times: 100.0 | divided_by: prod.compare_at_price | round -%}
+            <s class="price-tag__was">{{ prod.compare_at_price | money_without_trailing_zeros }}</s>
+            <span class="price-tag__off">-{{ off_pct }}%</span>
+          {%- endif -%}
         {%- else -%}
           <span class="price-tag__cur">{{ section.settings.price_currency }}</span>
           <span class="price-tag__num">{{ section.settings.price_amount }}</span>

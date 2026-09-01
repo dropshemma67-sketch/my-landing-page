@@ -53,9 +53,32 @@
         <h2 class="h2" style="font-size:clamp(1.6rem,3vw,2.3rem)">{{ section.settings.title }}</h2>
         <p class="muted small" style="margin-top:-.5rem">{{ section.settings.tagline }}</p>
 
+        {%- comment -%}
+          El precio tachado sale del «Precio de comparación» del producto en
+          Shopify. Se muestra solo si es mayor que el precio de venta, así el
+          porcentaje siempre corresponde a un descuento que existe de verdad.
+        {%- endcomment -%}
+        {%- liquid
+          if prod != blank
+            assign now_price = prod.price
+            assign was_price = prod.compare_at_price
+          else
+            assign now_price = 0
+            assign was_price = 0
+          endif
+          assign has_discount = false
+          if was_price > now_price and now_price > 0
+            assign has_discount = true
+            assign off_pct = was_price | minus: now_price | times: 100.0 | divided_by: was_price | round
+          endif
+        -%}
         <div class="price-row">
           {%- if prod != blank -%}
-            <span class="price-row__now">{{ prod.price | money_without_trailing_zeros }}</span>
+            <span class="price-row__now">{{ now_price | money_without_trailing_zeros }}</span>
+            {%- if has_discount -%}
+              <s class="price-row__was">{{ was_price | money_without_trailing_zeros }}</s>
+              <span class="price-row__off">-{{ off_pct }}%</span>
+            {%- endif -%}
           {%- else -%}
             <span class="price-row__now">{{ section.settings.price_text }}</span>
           {%- endif -%}
@@ -63,6 +86,12 @@
             <span class="ship-free">{{ section.settings.price_badge }}</span>
           {%- endif -%}
         </div>
+        {%- if has_discount and section.settings.discount_note != blank -%}
+          <p class="save-line">
+            {% render 'icon', name: 'check-circle', size: 15 %}
+            <span>{{ section.settings.discount_note | replace: '[ahorro]', was_price | minus: now_price | money_without_trailing_zeros }}</span>
+          </p>
+        {%- endif -%}
 
         {%- if section.blocks.size > 0 -%}
           <ul class="checklist">
@@ -260,6 +289,7 @@
     { "type": "text", "id": "tagline", "label": "Bajada", "default": "Soporte en X · Doble ajuste · Tallas S y M · Unisex" },
     { "type": "text", "id": "price_text", "label": "Precio (si no conectas producto)", "default": "S/ 60" },
     { "type": "text", "id": "price_badge", "label": "Insignia junto al precio", "default": "Envío gratis" },
+    { "type": "text", "id": "discount_note", "label": "Línea de ahorro", "default": "Precio de lanzamiento · ahorras [ahorro] hoy", "info": "Escribe [ahorro] donde quieras que aparezca el monto. Se muestra solo si el producto tiene un precio de comparación mayor en Shopify." },
     { "type": "checkbox", "id": "show_rating", "label": "Mostrar valoración", "default": true },
     { "type": "text", "id": "rating_text", "label": "Texto de valoración", "default": "4.8 · 312 reseñas" },
     { "type": "header", "content": "Galería" },
