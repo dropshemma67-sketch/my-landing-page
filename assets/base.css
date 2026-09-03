@@ -765,3 +765,24 @@ ul { margin: 0; padding: 0; list-style: none; }
   .qty-row { align-items: center; }
   .qty button { width: 42px; height: 42px; }
 }
+
+/* ============================================================
+   Reseñas: captura del cliente y estado de lanzamiento
+   ============================================================ */
+.quote__img {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-line);
+  object-fit: cover;
+  max-height: 260px;
+}
+.launch-note {
+  max-width: 620px;
+  margin-inline: auto;
+  padding: clamp(1.8rem, 4vw, 2.6rem);
+  display: grid;
+  gap: .9rem;
+  justify-items: center;
+  text-align: center;
+}
+.launch-note .card__ico { margin-bottom: 0; }

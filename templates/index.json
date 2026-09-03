@@ -6,25 +6,25 @@
         "s1": {
           "type": "stat",
           "settings": {
-            "number": "4.8",
-            "suffix": "/5",
-            "label": "Valoración"
+            "number": "2",
+            "suffix": "",
+            "label": "Tallas: S y M"
           }
         },
         "s2": {
           "type": "stat",
           "settings": {
-            "number": "2400",
-            "suffix": "+",
-            "label": "Pedidos entregados"
+            "number": "24",
+            "suffix": "h",
+            "label": "Despacho en Lima"
           }
         },
         "s3": {
           "type": "stat",
           "settings": {
-            "number": "24",
-            "suffix": "h",
-            "label": "Despacho en Lima"
+            "number": "7",
+            "suffix": " días",
+            "label": "Cambio por talla"
           }
         }
       },
@@ -218,7 +218,7 @@
         "tagline": "Soporte en X · Doble ajuste · Tallas S y M · Unisex",
         "price_text": "S/ 60",
         "price_badge": "Envío gratis",
-        "show_rating": true,
+        "show_rating": false,
         "rating_text": "4.8 · 312 reseñas",
         "form_title": "Completa tus datos y recíbelo en casa",
         "submit_mode": "checkout",
@@ -273,42 +273,15 @@
     },
     "reviews": {
       "type": "testimonials",
-      "blocks": {
-        "r1": {
-          "type": "quote",
-          "settings": {
-            "text": "Trabajo 9 horas en laptop y terminaba con el cuello durísimo. Llevo tres semanas usándolo y la diferencia es real: me siento derecha sin pensarlo.",
-            "name": "Carla M.",
-            "meta": "Compra verificada · Miraflores, Lima"
-          }
-        },
-        "r2": {
-          "type": "quote",
-          "settings": {
-            "text": "Lo pedí sin pagar nada por adelantado y llegó en dos días. Me lo probé, me quedó perfecto y recién ahí pagué. Súper cómodo el sistema.",
-            "name": "Diego R.",
-            "meta": "Compra verificada · Trujillo"
-          }
-        },
-        "r3": {
-          "type": "quote",
-          "settings": {
-            "text": "Lo uso debajo del polo en el gimnasio y no se nota nada. Las almohadillas de las axilas son lo mejor, no roza para nada.",
-            "name": "Andrea P.",
-            "meta": "Compra verificada · Arequipa"
-          }
-        }
-      },
-      "block_order": [
-        "r1",
-        "r2",
-        "r3"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "anchor": "resenas",
         "eyebrow": "Lo que dicen",
         "title": "Personas que ya cambiaron su postura",
-        "subtitle": "Reseñas de clientes que recibieron su pedido contraentrega."
+        "subtitle": "Publicamos aquí lo que nos escriben nuestros clientes, tal cual.",
+        "empty_title": "Sé de los primeros en probarlo",
+        "empty_text": "Acabamos de abrir. Publicamos aquí las reseñas de nuestros clientes tal como las escriben, sin filtrar. Si compras hoy, la tuya puede ser la primera."
       }
     },
     "faq": {

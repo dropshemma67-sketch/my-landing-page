@@ -7,21 +7,46 @@
       {%- if section.settings.subtitle != blank -%}<p class="lead" data-reveal data-delay="0.12">{{ section.settings.subtitle }}</p>{%- endif -%}
     </div>
 
-    <div class="grid-3">
-      {%- for block in section.blocks -%}
-        <figure class="glass glass-hover sheen quote" data-reveal data-delay="{{ forloop.index0 | times: 0.08 }}" {{ block.shopify_attributes }}>
-          <div class="quote__stars">{% for i in (1..5) %}{% render 'icon', name: 'star', size: 14 %}{% endfor %}</div>
-          <blockquote class="quote__txt">“{{ block.settings.text }}”</blockquote>
-          <figcaption class="quote__who">
-            <span class="avatar">{{ block.settings.name | slice: 0 }}</span>
-            <span>
-              <span style="display:block;font-weight:600;font-size:.9rem">{{ block.settings.name }}</span>
-              <span class="verified">{% render 'icon', name: 'check-circle', size: 12 %}{{ block.settings.meta }}</span>
-            </span>
-          </figcaption>
-        </figure>
-      {%- endfor -%}
-    </div>
+    {%- comment -%}
+      Sin bloques de reseña se muestra un panel de lanzamiento. Así la sección
+      nunca queda vacía ni obliga a inventar testimonios para rellenarla: las
+      reseñas se agregan una por una conforme llegan las reales.
+    {%- endcomment -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="grid-3">
+        {%- for block in section.blocks -%}
+          <figure class="glass glass-hover sheen quote" data-reveal data-delay="{{ forloop.index0 | times: 0.08 }}" {{ block.shopify_attributes }}>
+            <div class="quote__stars">
+              {%- assign stars = block.settings.stars | default: 5 -%}
+              {% for i in (1..stars) %}{% render 'icon', name: 'star', size: 14 %}{% endfor %}
+            </div>
+            {%- if block.settings.image != blank -%}
+              <img class="quote__img" src="{{ block.settings.image | image_url: width: 700 }}"
+                   alt="Reseña de {{ block.settings.name | escape }}" width="700" height="700" loading="lazy">
+            {%- endif -%}
+            <blockquote class="quote__txt">“{{ block.settings.text }}”</blockquote>
+            <figcaption class="quote__who">
+              <span class="avatar">{{ block.settings.name | slice: 0 }}</span>
+              <span>
+                <span style="display:block;font-weight:600;font-size:.9rem">{{ block.settings.name }}</span>
+                {%- if block.settings.meta != blank -%}
+                  <span class="verified">
+                    {%- if block.settings.verified -%}{% render 'icon', name: 'check-circle', size: 12 %}{%- endif -%}
+                    {{ block.settings.meta }}
+                  </span>
+                {%- endif -%}
+              </span>
+            </figcaption>
+          </figure>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="glass launch-note" data-reveal>
+        <span class="card__ico">{% render 'icon', name: 'heart', size: 24 %}</span>
+        <h3 class="h3">{{ section.settings.empty_title }}</h3>
+        <p class="muted">{{ section.settings.empty_text }}</p>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -33,28 +58,25 @@
     { "type": "text", "id": "anchor", "label": "Ancla (id)", "default": "resenas" },
     { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Lo que dicen" },
     { "type": "text", "id": "title", "label": "Título", "default": "Personas que ya cambiaron su postura" },
-    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Reseñas de clientes que recibieron su pedido contraentrega." }
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Reseñas de clientes que recibieron su pedido contraentrega." },
+    { "type": "header", "content": "Cuando aún no hay reseñas" },
+    { "type": "text", "id": "empty_title", "label": "Título", "default": "Sé de los primeros en probarlo" },
+    { "type": "textarea", "id": "empty_text", "label": "Texto", "default": "Acabamos de abrir. Publicamos aquí las reseñas de nuestros clientes tal como las escriben, sin filtrar. Si compras hoy, la tuya puede ser la primera." }
   ],
   "blocks": [
     {
       "type": "quote",
       "name": "Reseña",
       "settings": [
-        { "type": "textarea", "id": "text", "label": "Reseña", "default": "Me lo pongo apenas me siento a trabajar y ya no termino el día con el cuello duro." },
-        { "type": "text", "id": "name", "label": "Nombre", "default": "Carla M." },
-        { "type": "text", "id": "meta", "label": "Detalle", "default": "Compra verificada · Lima" }
+        { "type": "textarea", "id": "text", "label": "Reseña", "info": "Cópiala tal como te la escribió el cliente." },
+        { "type": "text", "id": "name", "label": "Nombre", "info": "Nombre y una inicial basta: Carla M." },
+        { "type": "text", "id": "meta", "label": "Detalle", "info": "Ej: Compra verificada · Miraflores, Lima" },
+        { "type": "checkbox", "id": "verified", "label": "Marcar como compra verificada", "default": true, "info": "Márcalo solo si esta persona realmente compró en tu tienda." },
+        { "type": "range", "id": "stars", "label": "Estrellas", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "image_picker", "id": "image", "label": "Foto o captura", "info": "Una captura del WhatsApp del cliente o una foto suya con el producto. Es lo que más convierte." }
       ]
     }
   ],
-  "presets": [
-    {
-      "name": "Reseñas",
-      "blocks": [
-        { "type": "quote", "settings": { "text": "Trabajo 9 horas en laptop y terminaba con el cuello durísimo. Con esto llevo tres semanas y la diferencia es real: me siento derecha sin pensarlo.", "name": "Carla M.", "meta": "Compra verificada · Miraflores, Lima" } },
-        { "type": "quote", "settings": { "text": "Lo pedí sin pagar nada por adelantado y llegó en dos días. Me lo probé, me quedó perfecto y recién ahí pagué. Súper cómodo el sistema.", "name": "Diego R.", "meta": "Compra verificada · Trujillo" } },
-        { "type": "quote", "settings": { "text": "Lo uso debajo del polo en el gimnasio y no se nota nada. Las almohadillas de las axilas son lo mejor, no roza para nada.", "name": "Andrea P.", "meta": "Compra verificada · Arequipa" } }
-      ]
-    }
-  ]
+  "presets": [{ "name": "Reseñas" }]
 }
 {% endschema %}
