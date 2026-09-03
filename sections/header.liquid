@@ -22,10 +22,17 @@
           <span class="btn__label">{{ section.settings.cta_text }}</span>
         </a>
       {%- endif -%}
-      <a class="hdr__cart" href="{{ routes.cart_url }}" aria-label="Carrito">
-        {% render 'icon', name: 'bag', size: 17 %}
-        <span>{{ cart.item_count }}</span>
-      </a>
+      {%- comment -%}
+        En una tienda de un solo producto el carrito no aporta: el formulario
+        vacía el carrito y lleva directo al checkout, así que el ícono solo
+        ofrece una salida más antes de comprar.
+      {%- endcomment -%}
+      {%- if section.settings.show_cart -%}
+        <a class="hdr__cart" href="{{ routes.cart_url }}" aria-label="Carrito">
+          {% render 'icon', name: 'bag', size: 17 %}
+          <span>{{ cart.item_count }}</span>
+        </a>
+      {%- endif -%}
       <button class="burger" data-burger aria-expanded="false" aria-label="Abrir menú"><span></span></button>
     </div>
   </div>
@@ -45,7 +52,8 @@
     { "type": "text", "id": "brand", "label": "Nombre de marca", "default": "MAERK" },
     { "type": "link_list", "id": "menu", "label": "Menú", "default": "main-menu" },
     { "type": "text", "id": "cta_text", "label": "Texto del botón", "default": "Pedir ahora" },
-    { "type": "url", "id": "cta_url", "label": "Enlace del botón" }
+    { "type": "url", "id": "cta_url", "label": "Enlace del botón" },
+    { "type": "checkbox", "id": "show_cart", "label": "Mostrar ícono de carrito", "default": false, "info": "En una tienda de un solo producto conviene ocultarlo: es una salida menos antes de comprar." }
   ]
 }
 {% endschema %}
